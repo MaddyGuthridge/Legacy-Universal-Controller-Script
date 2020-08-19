@@ -22,14 +22,14 @@ def OnMidiIn(event):
     
     command = eventprocessor.ParsedEvent(event)
     
-    print(command)
+    
     
     if internal.initState == internal.consts.INIT_FAIL:
         return
     elif internal.initState == internal.consts.INIT_SETUP:
         internal.setup.processSetup(command)
 
-    
+    #print(command)
 
 def OnIdle():
     pass

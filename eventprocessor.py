@@ -11,8 +11,14 @@ class ParsedEvent:
         
         self.is_lift = not self.value
         
-        self.type, self.control = detector.recognise(self.status, self.note)
+        self.refreshId()
 
     def __str__(self):
-        return "Event: " + self.type + " " + self.control + " (" + str(self.status) + " " + str(self.note) + " " + str(self.value) + ")"
+        return "Event: " + self.type + " " + str(self.control) + " (" + str(self.status) + " " + str(self.note) + " " + str(self.value) + ")"
+
+    def getId(self):
+        return (self.type, self.control)
+    
+    def refreshId(self):
+        self.type, self.control = detector.recognise(self.status, self.note)
 

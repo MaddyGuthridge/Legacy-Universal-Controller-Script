@@ -6,8 +6,8 @@ This script helps with initialising the script, and setting up the event detecto
 Author: Miguel Guthridge
 """
 
-from . import consts
-from .parse import detector
+from .. import consts
+from ..parse import detector
 
 import helpers
 import eventconsts
@@ -26,7 +26,22 @@ class InitState:
     
 initState = InitState()
 
-SETUP_CURRENT_LEARN = ""
+class Learner:
+    current = [0, 0]
+    
+    def setCurrent(self, action, new_type, new_control, control_type="", can_skip=False):
+        self.current = (new_type, new_control)
+        print("")
+        if type(new_control) is int:
+            new_control = helpers.getNumSuffix(new_control + 1)
+        print(action, "the", new_control, new_type, control_type)
+        if can_skip:
+            print("If your controller doesn't have this, press the stop button")
+    
+    def __getitem__(self, key):
+        return self.current[key]
+
+learn = Learner()
 
 def initialise():
     print(helpers.getLineBreak())
@@ -45,33 +60,22 @@ def initialise():
     initState.setVal(consts.INIT_SETUP)
 
     if initState == consts.INIT_SETUP:
-        setSetupLearn(eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_STOP, "Press the stop button")
+        learn.setCurrent("Press", eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_STOP, "button")
 
-def setSetupLearn(new_type, new_control, message=""):
-    global SETUP_CURRENT_LEARN
-    
-    SETUP_CURRENT_LEARN = (new_type, new_control)
-    print(message)
 
 def processSetup(command):
-    if SETUP_CURRENT_LEARN[0] == eventconsts.TYPE_TRANSPORT:
-        setupTransport(command)
+    if learn[0] == eventconsts.TYPE_TRANSPORT:
+        transport.setupTransport(command)
+    elif learn[0] == eventconsts.TYPE_FADER:
+        fader.setupFader(command)
+    elif learn[0] == eventconsts.TYPE_FADER_BUTTON:
+        fader.setupFaderButton(command)
+    elif learn[0] == eventconsts.TYPE_KNOB:
+        fader.setupKnob(command)
     
-    
-def setupTransport(command):
-    if command.is_lift:
-        if SETUP_CURRENT_LEARN[1] == eventconsts.CONTROL_STOP:
-            setupStop(command)
-        elif SETUP_CURRENT_LEARN[1] == eventconsts.CONTROL_PLAY:
-            setupPlay(command)
-    
-    
-def setupStop(command):
-    detector.addEvent(command.status, command.note, eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_STOP)
-    
-    setSetupLearn(eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_PLAY, "Press the play button")
+    command.refreshId()
 
-def setupPlay(command):
-    if command.type == eventconsts.TYPE_UNKNOWN:
-        detector.addEvent(command.status, command.note, eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_PLAY)
+
+
+from . import transport, fader
 

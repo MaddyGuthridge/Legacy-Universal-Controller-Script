@@ -25,16 +25,16 @@ class EventDetector:
             return eventconsts.TYPE_FADER, self.fader_controls[id_val]
 
         elif id_val in self.fader_button_controls:
-            return "Fader Button", self.fader_button_controls[id_val]
+            return eventconsts.TYPE_FADER_BUTTON, self.fader_button_controls[id_val]
         
         elif id_val in self.knob_controls:
-            return "Knob", self.knob_controls[id_val]
+            return eventconsts.TYPE_KNOB, self.knob_controls[id_val]
         
         elif id_val in self.coord_controls:
-            return "Coord", self.fader_controls[id_val]
+            return eventconsts.TYPE_COORD, self.fader_controls[id_val]
         
         elif id_val in self.basic_controls:
-            return "Basic", self.basic_controls[id_val]
+            return eventconsts.TYPE_BASIC, self.basic_controls[id_val]
 
         else:
             return eventconsts.TYPE_UNKNOWN, "Null"
@@ -47,16 +47,16 @@ class EventDetector:
         elif event_type == eventconsts.TYPE_FADER:
             self.fader_controls[id_val] = control
         
-        elif event_type == "Fader Button":
+        elif event_type == eventconsts.TYPE_FADER_BUTTON:
             self.fader_button_controls[id_val] = control
         
-        elif event_type == "Knob":
+        elif event_type == eventconsts.TYPE_KNOB:
             self.knob_controls[id_val] = control
         
-        elif event_type == "Coord":
+        elif event_type == eventconsts.TYPE_COORD:
             self.coord_controls[id_val] = control
         
-        elif event_type == "Basic":
+        elif event_type == eventconsts.TYPE_BASIC:
             self.basic_controls[id_val] = control
 
 
