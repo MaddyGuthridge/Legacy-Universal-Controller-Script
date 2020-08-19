@@ -30,7 +30,7 @@ def OnMidiIn(event):
     elif internal.initState == internal.consts.INIT_SETUP:
         internal.setup.processSetup(command)
     elif internal.initState == internal.consts.INIT_SUCCESS:
-        pass
+        eventprocessor.process(command)
     
     command_str = str(command)
     if len(command_str):

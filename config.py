@@ -36,7 +36,7 @@ PITCH_BEND_JOG_SPEED = 0.05
 CHAOTIC_EVIL_ERROR_NOTE_HANDLER = True
 
 # Controls which console messages are printed. Add things from the DEBUG object
-CONSOLE_DEBUG_MODE = [DEBUG.EVENT_DATA, DEBUG.EVENT_ACTIONS]
+CONSOLE_DEBUG_MODE = []
 
 # Whether script should stop entirely when it encounters an error.
 DEBUG_HARD_CRASHING = False

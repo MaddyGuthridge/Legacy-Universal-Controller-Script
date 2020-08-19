@@ -3,6 +3,8 @@ from internal import consts
 from internal.parse import detector
 import processorhelpers
 import config
+import helpers
+import eventprocessors.processdefault as default
 
 class ParsedEvent:
     
@@ -23,7 +25,10 @@ class ParsedEvent:
         
         ret = ""
         if consts.DEBUG.EVENT_DATA in config.CONSOLE_DEBUG_MODE:
-            ret +=  "Event: " + self.type + " " + str(self.control) + " (" + str(self.status) + " " + str(self.note) + " " + str(self.value) + ")"
+            ret +=  helpers.getTab("Event: ") + helpers.getTab(self.type + " ")\
+                 + helpers.getTab(str(self.control))\
+                      + " (" + str(self.status) + " " + str(self.note) + " " + str(self.value) + ")"
+            
         if consts.DEBUG.EVENT_ACTIONS in config.CONSOLE_DEBUG_MODE:
             ret += '\n' + self.actions.flush()
         
@@ -44,4 +49,10 @@ class ParsedEvent:
     
     def addProcessor(self, name):
         self.actions.addProcessor(name)
+
+
+def process(command):
+    default.process(command)
+    
+    
 

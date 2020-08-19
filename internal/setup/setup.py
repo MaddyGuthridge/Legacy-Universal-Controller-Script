@@ -19,6 +19,10 @@ class InitState:
         return self.state
     
     def setVal(self, new_val):
+        if self.state == consts.INIT_SETUP and new_val == consts.INIT_SUCCESS:
+            print("")
+            print("Setup complete!")
+            print("")
         self.state = new_val
 
     def __eq__(self, other):
