@@ -31,7 +31,7 @@ TYPE_KNOB = "Knob"
 CONTROL_MASTER_KNOB = -1
 
 #####################################
-TYPE_COORD = "Coord"
+TYPE_DRUM_PAD = "Drum Pad"
 
 #####################################
 TYPE_BASIC = "Basic"

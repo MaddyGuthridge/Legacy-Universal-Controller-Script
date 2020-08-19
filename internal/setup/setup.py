@@ -72,10 +72,12 @@ def processSetup(command):
         fader.setupFaderButton(command)
     elif learn[0] == eventconsts.TYPE_KNOB:
         fader.setupKnob(command)
+    elif learn[0] == eventconsts.TYPE_DRUM_PAD:
+        drumpad.setupDrums(command)
     
     command.refreshId()
 
 
 
-from . import transport, fader
+from . import transport, fader, drumpad
 

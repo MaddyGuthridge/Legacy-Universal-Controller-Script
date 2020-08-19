@@ -13,7 +13,7 @@ class EventDetector:
     fader_controls = dict()
     fader_button_controls = dict()
     knob_controls = dict()
-    coord_controls = dict()
+    drum_pad_controls = dict()
     basic_controls = dict()
     
     def recognise(self, status, note):
@@ -30,8 +30,9 @@ class EventDetector:
         elif id_val in self.knob_controls:
             return eventconsts.TYPE_KNOB, self.knob_controls[id_val]
         
-        elif id_val in self.coord_controls:
-            return eventconsts.TYPE_COORD, self.fader_controls[id_val]
+        elif note in self.drum_pad_controls:
+            # Use only note because drum pads use note events
+            return eventconsts.TYPE_DRUM_PAD, self.drum_pad_controls[note]
         
         elif id_val in self.basic_controls:
             return eventconsts.TYPE_BASIC, self.basic_controls[id_val]
@@ -53,8 +54,9 @@ class EventDetector:
         elif event_type == eventconsts.TYPE_KNOB:
             self.knob_controls[id_val] = control
         
-        elif event_type == eventconsts.TYPE_COORD:
-            self.coord_controls[id_val] = control
+        elif event_type == eventconsts.TYPE_DRUM_PAD:
+            # Use only note because drum pads use note events
+            self.drum_pad_controls[note] = control
         
         elif event_type == eventconsts.TYPE_BASIC:
             self.basic_controls[id_val] = control

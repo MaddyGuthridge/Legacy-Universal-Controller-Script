@@ -1,6 +1,7 @@
 from ..parse import detector
 from .. import consts
-from .setup import learn, initState
+from .setup import learn
+from .import drumpad
 
 import eventconsts
 
@@ -58,4 +59,4 @@ def setupKnob(command):
         learn.setCurrent("Tweak", eventconsts.TYPE_KNOB, knob_num)
         print("If your controller doesn't have this many knobs, press the stop button.")
     elif command.getId() == (eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_STOP) and command.is_lift:
-        initState.setVal(consts.INIT_SUCCESS)
+        drumpad.setLearnFirstDrumPad()

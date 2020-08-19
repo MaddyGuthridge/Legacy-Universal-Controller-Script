@@ -9,6 +9,8 @@ class ParsedEvent:
         self.note = event.data1
         self.value = event.data2
         
+        self.handled = False
+        
         self.is_lift = not self.value
         
         self.refreshId()
