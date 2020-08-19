@@ -28,8 +28,8 @@ def OnMidiIn(event):
         return
     elif internal.initState == internal.consts.INIT_SETUP:
         internal.setup.processSetup(command)
-
-    #print(command)
+    elif internal.initState == internal.consts.INIT_SUCCESS:
+        print(command)
 
 def OnIdle():
     pass

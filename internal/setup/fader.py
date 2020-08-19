@@ -1,5 +1,6 @@
 from ..parse import detector
-from .setup import learn
+from .. import consts
+from .setup import learn, initState
 
 import eventconsts
 
@@ -56,6 +57,5 @@ def setupKnob(command):
         knob_num += 1
         learn.setCurrent("Tweak", eventconsts.TYPE_KNOB, knob_num)
         print("If your controller doesn't have this many knobs, press the stop button.")
-    elif command.getId() == eventconsts.CONTROL_STOP:
-        # Do knobs
-        pass
+    elif command.getId() == (eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_STOP) and command.is_lift:
+        initState.setVal(consts.INIT_SUCCESS)
