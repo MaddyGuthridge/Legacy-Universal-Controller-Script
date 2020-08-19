@@ -10,6 +10,7 @@ Author: Miguel Guthridge
 """
 
 import internal
+import helpers
 import eventprocessor
 
 def OnInit():
@@ -29,7 +30,11 @@ def OnMidiIn(event):
     elif internal.initState == internal.consts.INIT_SETUP:
         internal.setup.processSetup(command)
     elif internal.initState == internal.consts.INIT_SUCCESS:
-        print(command)
+        pass
+    
+    command_str = str(command)
+    if len(command_str):
+        print(command_str)
 
 def OnIdle():
     pass

@@ -64,6 +64,7 @@ def initialise():
 
 
 def processSetup(command):
+    command.addProcessor("Setup processor")
     if learn[0] == eventconsts.TYPE_TRANSPORT:
         transport.setupTransport(command)
     elif learn[0] == eventconsts.TYPE_FADER:
@@ -76,6 +77,9 @@ def processSetup(command):
         drumpad.setupDrums(command)
     
     command.refreshId()
+    
+    if not command.handled:
+        command.handle("Setup catch-all")
 
 
 
