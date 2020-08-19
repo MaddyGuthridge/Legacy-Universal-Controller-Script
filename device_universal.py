@@ -9,53 +9,27 @@ This file is the controller file for a universal device. It forwards events onto
 Author: Miguel Guthridge
 """
 
-
-import patterns
-import channels
-import mixer
-import device
-import transport
-import arrangement
-import general
-import launchMapPages
-import playlist
-import ui
-import screen
-
-import midi
-import utils
-
-
-
-class TGeneric():
-    def __init__(self):
-        return
-
-    def OnInit(self):
-        pass
-
-    def OnDeInit(self):
-        pass
-
-    def OnMidiIn(self, event):
-        pass
-    
-    def OnIdle(self):
-        pass
-
-
-
-
-Generic = TGeneric()
+import internal
+import eventprocessor
 
 def OnInit():
-    Generic.OnInit()
+    internal.setup.initialise()
 
 def OnDeInit():
-    Generic.OnDeInit()
+    pass
 
 def OnMidiIn(event):
-    Generic.OnMidiIn(event)
+    
+    command = eventprocessor.ParsedEvent(event)
+    
+    print(command)
+    
+    if internal.initState == internal.consts.INIT_FAIL:
+        return
+    elif internal.initState == internal.consts.INIT_SETUP:
+        internal.setup.processSetup(command)
+
+    
 
 def OnIdle():
-    Generic.OnIdle()
+    pass
