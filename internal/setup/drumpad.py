@@ -3,9 +3,10 @@ from .. import consts
 from .setup import learn, initState
 
 import eventconsts
+import helpers
 
 def setLearnFirstDrumPad():
-    learn.setCurrent("Press", eventconsts.TYPE_DRUM_PAD, (x_coord, y_coord), can_skip=True)
+    learn.setCurrent(eventconsts.TYPE_DRUM_PAD, (x_coord, y_coord), "Press the (" + str(x_coord+1) + ", " + str(y_coord+1) + ") drum pad", can_skip=True)
 
 x_coord = 0
 y_coord = 0
@@ -16,14 +17,20 @@ def setupDrums(command):
         command.handle("Register drum pad")
         detector.addEvent(command.status, command.note, eventconsts.TYPE_DRUM_PAD, (x_coord, y_coord))
         x_coord += 1
-        learn.setCurrent("Press", eventconsts.TYPE_DRUM_PAD, (x_coord, y_coord))
+        learn.setCurrent(eventconsts.TYPE_DRUM_PAD, (x_coord, y_coord), "Press the (" + str(x_coord+1) + ", " + str(y_coord+1) + ") drum pad")
         print("If that was the last drum pad in this row, press the skip back button.")
     elif command.getId() == (eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_SKIP_BACK) and command.is_lift:
         command.handle("End of drum pad row")
         x_coord = 0
         y_coord += 1
-        learn.setCurrent("Press", eventconsts.TYPE_DRUM_PAD, (x_coord, y_coord))
+        learn.setCurrent(eventconsts.TYPE_DRUM_PAD, (x_coord, y_coord), "Press the (" + str(x_coord+1) + ", " + str(y_coord+1) + ") drum pad")
         print("If that was the last row, press the stop button.")
     elif command.getId() == (eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_STOP) and command.is_lift:
         command.handle("Last drum pad")
-        initState.setVal(consts.INIT_SUCCESS)
+        learn.current = (consts.INIT_SUCCESS, consts.INIT_SUCCESS)
+        print("")
+        print(helpers.getLineBreak())
+        print("The initialisation is now complete!")
+        print("If you want to make a file to automate the initialisation, press the play button.")
+        print("If you don't, press the stop button.")
+

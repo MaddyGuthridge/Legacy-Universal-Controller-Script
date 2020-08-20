@@ -3,10 +3,11 @@ from .. import consts
 from .setup import learn
 from .import drumpad
 
+import helpers
 import eventconsts
 
 def setLearnFirstFader():
-    learn.setCurrent("Tweak", eventconsts.TYPE_FADER, "Master", can_skip=True)
+    learn.setCurrent(eventconsts.TYPE_FADER, eventconsts.CONTROL_MASTER_FADER, "Tweak the master fader", can_skip=True)
 
 fader_num = -1
 
@@ -20,7 +21,7 @@ def setupFader(command):
             detector.addEvent(command.status, command.note, eventconsts.TYPE_FADER, fader_num)
             command.handle("Register fader")
         fader_num += 1
-        learn.setCurrent("Tweak", eventconsts.TYPE_FADER, fader_num)
+        learn.setCurrent(eventconsts.TYPE_FADER, fader_num, ("Tweak the " + helpers.getNumSuffix(fader_num + 1) + " fader"))
         print("If your controller doesn't have this many faders, press the stop button.")
     elif command.getId() == (eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_STOP) and command.is_lift:
         command.handle("No more faders")
@@ -28,7 +29,7 @@ def setupFader(command):
         setLearnFirstFaderButton()
 
 def setLearnFirstFaderButton():
-    learn.setCurrent("Press", eventconsts.TYPE_FADER_BUTTON, "Master", can_skip=True)
+    learn.setCurrent(eventconsts.TYPE_FADER_BUTTON, eventconsts.CONTROL_MASTER_FADER_BUTTON, "Press the master fader button", can_skip=True)
 
 fader_button_num = -1
 
@@ -42,7 +43,7 @@ def setupFaderButton(command):
             detector.addEvent(command.status, command.note, eventconsts.TYPE_FADER_BUTTON, fader_button_num)
             command.handle("Register fader button")
         fader_button_num += 1
-        learn.setCurrent("Press", eventconsts.TYPE_FADER_BUTTON, fader_button_num)
+        learn.setCurrent(eventconsts.TYPE_FADER_BUTTON, fader_num, ("Press the " + helpers.getNumSuffix(fader_button_num + 1) + " fader button"))
         print("If your controller doesn't have this many fader buttons, press the stop button.")
     elif command.getId() == (eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_STOP) and command.is_lift:
         command.handle("No more fader buttons")
@@ -50,7 +51,7 @@ def setupFaderButton(command):
         setLearnFirstKnob()
 
 def setLearnFirstKnob():
-    learn.setCurrent("Tweak", eventconsts.TYPE_KNOB, "Master", can_skip=True)
+    learn.setCurrent(eventconsts.TYPE_KNOB, eventconsts.CONTROL_MASTER_KNOB, "Tweak the master knob", can_skip=True)
 
 knob_num = -1
 
@@ -64,7 +65,7 @@ def setupKnob(command):
             detector.addEvent(command.status, command.note, eventconsts.TYPE_KNOB, knob_num)
             command.handle("Register knob")
         knob_num += 1
-        learn.setCurrent("Tweak", eventconsts.TYPE_KNOB, knob_num)
+        learn.setCurrent(eventconsts.TYPE_KNOB, fader_num, ("Tweak the " + helpers.getNumSuffix(knob_num + 1) + " knob"))
         print("If your controller doesn't have this many knobs, press the stop button.")
     elif command.getId() == (eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_STOP) and command.is_lift:
         command.handle("No more knobs")

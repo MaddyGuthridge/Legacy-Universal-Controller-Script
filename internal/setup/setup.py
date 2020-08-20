@@ -33,12 +33,10 @@ initState = InitState()
 class Learner:
     current = [0, 0]
     
-    def setCurrent(self, action, new_type, new_control, control_type="", can_skip=False):
+    def setCurrent(self, new_type, new_control, message, can_skip=False):
         self.current = (new_type, new_control)
         print("")
-        if type(new_control) is int:
-            new_control = helpers.getNumSuffix(new_control + 1)
-        print(action, "the", new_control, new_type, control_type)
+        print(message)
         if can_skip:
             print("If your controller doesn't have this, press the stop button")
     
@@ -68,7 +66,7 @@ def initialise():
         initState.setVal(consts.INIT_SETUP)
 
     if initState == consts.INIT_SETUP:
-        learn.setCurrent("Press", eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_STOP, "button")
+        learn.setCurrent(eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_STOP, "Press the stop button")
 
 
 def processSetup(command):
@@ -83,13 +81,22 @@ def processSetup(command):
         fader.setupKnob(command)
     elif learn[0] == eventconsts.TYPE_DRUM_PAD:
         drumpad.setupDrums(command)
+    elif learn[0] == consts.INIT_SUCCESS:
+        offerPrintout(command)
     
     command.refreshId()
     
     if not command.handled:
         command.handle("Setup catch-all")
 
-
+def offerPrintout(command):
+    if command.getId() == (eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_PLAY) and command.is_lift:
+        detector.dumpAutoinitScript()
+        initState.setVal(consts.INIT_SUCCESS)
+        command.handle("Dump autoinit script, finished initialisation")
+    elif command.getId() == (eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_STOP) and command.is_lift:
+        command.handle("Finished initialisation")
+        initState.setVal(consts.INIT_SUCCESS)
 
 from . import transport, fader, drumpad
 

@@ -117,7 +117,14 @@ class EventDetector:
                   + ", \"" + eventconsts.TYPE_DRUM_PAD + "\", \""
                   + str(value) + "\")"
                 )
-        
+        print("")
+        print("")
+        print("###  AUTOINIT SCRIPT  |  COPY FROM HERE UPWARDS  ###")
+        print(helpers.getLineBreak())
+        print("")
+        print("In order to make your controller initialise automatically,")
+        print("copy the above block of text into a blank text file.")
+        print("Save the file in the script's directory under the name `autoinit.py`.")
         return ""
         
         
