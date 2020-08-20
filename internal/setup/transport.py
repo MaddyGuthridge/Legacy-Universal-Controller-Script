@@ -35,25 +35,32 @@ def setupPlay(command):
     if command.type == eventconsts.TYPE_UNKNOWN:
         command.handle("Register play button")
         detector.addEvent(command.status, command.note, eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_PLAY)
-        learn.setCurrent(eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_LOOP, "Press the loop button")
+        learn.setCurrent(eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_LOOP, "Press the loop button", True)
 
 def setupLoop(command):
     if command.type == eventconsts.TYPE_UNKNOWN:
         command.handle("Register loop button")
         detector.addEvent(command.status, command.note, eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_LOOP)
-        learn.setCurrent(eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_REC, "Press the record button")
+    elif command.getId() == (eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_STOP):
+        command.handle("No loop button")
+    else:
+        return
+    learn.setCurrent(eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_REC, "Press the record button")
     
 def setupRec(command):
     if command.type == eventconsts.TYPE_UNKNOWN:
         command.handle("Register record button")
         detector.addEvent(command.status, command.note, eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_REC)
-        learn.setCurrent(eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_SKIP_FORWARD, "Press the fast-forward button")
+        learn.setCurrent(eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_SKIP_FORWARD, "Press the fast-forward button", True)
 
 def setupSkipForward(command):
     if command.type == eventconsts.TYPE_UNKNOWN:
         command.handle("Register fast-forward button")
         detector.addEvent(command.status, command.note, eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_SKIP_FORWARD)
         learn.setCurrent(eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_SKIP_BACK, "Press the rewind button")
+    elif command.getId() == (eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_STOP):
+        command.handle("No skip buttons")
+        learn.setCurrent(eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_NEXT, "Press the next track button", True)
 
 def setupSkipBackward(command):
     if command.type == eventconsts.TYPE_UNKNOWN:
