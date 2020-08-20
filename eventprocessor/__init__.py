@@ -6,5 +6,4 @@ Imports frequently used objects and functions.
 Author: Miguel Guthridge
 """
 
-from .setup import initState
-from .windowstate import window
+from .eventprocessor import activeStart, activeEnd, process

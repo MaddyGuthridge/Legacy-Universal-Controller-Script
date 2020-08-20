@@ -21,7 +21,7 @@ def OnDeInit():
 
 def OnMidiIn(event):
     
-    command = eventprocessor.ParsedEvent(event)
+    command = internal.parse.ParsedEvent(event)
     
     
     
@@ -37,5 +37,5 @@ def OnMidiIn(event):
         print(command_str)
 
 def OnIdle():
-    pass
+    internal.window.update()
 
