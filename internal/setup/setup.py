@@ -61,7 +61,11 @@ def initialise():
     # For the moment just initialise the script to setup mode.
     # Eventually we'll try to read a configuration file to load the state of the script
 
-    initState.setVal(consts.INIT_SETUP)
+    try:
+        __import__("autoinit")
+        initState.setVal(consts.INIT_SUCCESS)
+    except:
+        initState.setVal(consts.INIT_SETUP)
 
     if initState == consts.INIT_SETUP:
         learn.setCurrent("Press", eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_STOP, "button")
