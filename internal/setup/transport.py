@@ -45,13 +45,17 @@ def setupLoop(command):
         command.handle("No loop button")
     else:
         return
-    learn.setCurrent(eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_REC, "Press the record button")
+    learn.setCurrent(eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_REC, "Press the record button", True)
     
 def setupRec(command):
     if command.type == eventconsts.TYPE_UNKNOWN:
         command.handle("Register record button")
         detector.addEvent(command.status, command.note, eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_REC)
-        learn.setCurrent(eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_SKIP_FORWARD, "Press the fast-forward button", True)
+    elif command.getId() == (eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_STOP):
+        command.handle("No record button")
+    else:
+        return
+    learn.setCurrent(eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_SKIP_FORWARD, "Press the fast-forward button", True)
 
 def setupSkipForward(command):
     if command.type == eventconsts.TYPE_UNKNOWN:

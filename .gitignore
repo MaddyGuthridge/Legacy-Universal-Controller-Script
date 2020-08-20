@@ -3,3 +3,4 @@ Universal Controller Script.code-workspace
 .vscode/.ropeproject/config.py
 .vscode/.ropeproject/objectdb
 autoinit.py
+_autoinit.py
