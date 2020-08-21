@@ -31,13 +31,6 @@ AUTOCANCEL_SUSTAINED_SHIFT = False
 # Determines the navigation speed using the pitch bend wheel in the shift menu
 PITCH_BEND_JOG_SPEED = 0.05
 
-
-# For fun when the script crashes
-CHAOTIC_EVIL_ERROR_NOTE_HANDLER = True
-
 # Controls which console messages are printed. Add things from the DEBUG object
 CONSOLE_DEBUG_MODE = []
-
-# Whether script should stop entirely when it encounters an error.
-DEBUG_HARD_CRASHING = False
 

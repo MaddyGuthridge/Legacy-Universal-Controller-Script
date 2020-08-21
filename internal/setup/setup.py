@@ -73,6 +73,8 @@ def processSetup(command):
     command.addProcessor("Setup processor")
     if learn[0] == eventconsts.TYPE_TRANSPORT:
         transport.setupTransport(command)
+    elif learn[0] == eventconsts.TYPE_JOG:
+        jog.setupJog(command)
     elif learn[0] == eventconsts.TYPE_FADER:
         fader.setupFader(command)
     elif learn[0] == eventconsts.TYPE_FADER_BUTTON:
@@ -98,5 +100,5 @@ def offerPrintout(command):
         command.handle("Finished initialisation")
         initState.setVal(consts.INIT_SUCCESS)
 
-from . import transport, fader, drumpad
+from . import transport, jog, fader, drumpad
 

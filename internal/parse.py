@@ -14,17 +14,22 @@ import processorhelpers
 
 class EventDetector:
     transport_controls = dict()
+    jog_controls = dict()
     fader_controls = dict()
     fader_button_controls = dict()
     knob_controls = dict()
     drum_pad_controls = dict()
     basic_controls = dict()
     
-    def recognise(self, status, note):
+    def recognise(self, status, note, value):
         id_val = (status, note)
+        event_val = (status, note, value)
         channel = status & int('00001111', 2)
         if id_val in self.transport_controls:
             return eventconsts.TYPE_TRANSPORT, self.transport_controls[id_val]
+        
+        elif event_val in self.jog_controls:
+            return eventconsts.TYPE_JOG, self.jog_controls[event_val]
         
         elif id_val in self.fader_controls:
             return eventconsts.TYPE_FADER, self.fader_controls[id_val]
@@ -45,11 +50,15 @@ class EventDetector:
         else:
             return eventconsts.TYPE_UNKNOWN, "Null"
     
-    def addEvent(self, status, note, event_type, control):
+    def addEvent(self, status, note, value, event_type, control):
         id_val = (status, note)
+        event_val = (status, note, value)
         channel = status & int('00001111', 2)
         if event_type == eventconsts.TYPE_TRANSPORT:
             self.transport_controls[id_val] = control
+        
+        elif event_type == eventconsts.TYPE_JOG:
+            self.jog_controls[event_val] = control
         
         elif event_type == eventconsts.TYPE_FADER:
             self.fader_controls[id_val] = control
@@ -83,7 +92,16 @@ class EventDetector:
         print("")
         for key, value in self.transport_controls.items():
             print("detector.addEvent(" + str(key[0]) + ", " + str(key[1])
-                  + ", \"" + eventconsts.TYPE_TRANSPORT + "\", \""
+                  + ", 0, \"" + eventconsts.TYPE_TRANSPORT + "\", \""
+                  + str(value) + "\")"
+                )
+        print("")
+        print("")
+        print("# Jog wheel")
+        print("")
+        for key, value in self.jog_controls.items():
+            print("detector.addEvent(" + str(key[0]) + ", " + str(key[1])
+                  + ", " + str(key[2]) + ", \"" + eventconsts.TYPE_JOG + "\", \""
                   + str(value) + "\")"
                 )
         print("")
@@ -92,7 +110,7 @@ class EventDetector:
         print("")
         for key, value in self.fader_controls.items():
             print("detector.addEvent(" + str(key[0]) + ", " + str(key[1])
-                  + ", \"" + eventconsts.TYPE_FADER + "\", "
+                  + ", 0, \"" + eventconsts.TYPE_FADER + "\", "
                   + str(value) + ")"
                 )
         print("")
@@ -101,7 +119,7 @@ class EventDetector:
         print("")
         for key, value in self.fader_button_controls.items():
             print("detector.addEvent(" + str(key[0]) + ", " + str(key[1])
-                  + ", \"" + eventconsts.TYPE_FADER_BUTTON + "\", "
+                  + ", 0, \"" + eventconsts.TYPE_FADER_BUTTON + "\", "
                   + str(value) + ")"
                 )
         print("")
@@ -110,7 +128,7 @@ class EventDetector:
         print("")
         for key, value in self.knob_controls.items():
             print("detector.addEvent(" + str(key[0]) + ", " + str(key[1])
-                  + ", \"" + eventconsts.TYPE_KNOB + "\", "
+                  + ", 0, \"" + eventconsts.TYPE_KNOB + "\", "
                   + str(value) + ")"
                 )
         print("")
@@ -119,7 +137,7 @@ class EventDetector:
         print("")
         for key, value in self.drum_pad_controls.items():
             print("detector.addEvent(" + str(key[0]) + ", " + str(key[1])
-                  + ", \"" + eventconsts.TYPE_DRUM_PAD + "\", "
+                  + ", 0, \"" + eventconsts.TYPE_DRUM_PAD + "\", "
                   + str(value) + ")"
                 )
         print("")
@@ -172,7 +190,7 @@ class ParsedEvent:
         return (self.type, self.control)
     
     def refreshId(self):
-        self.type, self.control = detector.recognise(self.status, self.note)
+        self.type, self.control = detector.recognise(self.status, self.note, self.value)
         
     def handle(self, action, silent=False):
         self.handled = True

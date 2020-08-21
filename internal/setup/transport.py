@@ -26,7 +26,7 @@ def setupTransport(command):
 
 
 def setupStop(command):
-    detector.addEvent(command.status, command.note, eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_STOP)
+    detector.addEvent(command.status, command.note, command.value, eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_STOP)
     command.handle("Register stop button")
     
     learn.setCurrent(eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_PLAY, "Press the play button")
@@ -34,13 +34,13 @@ def setupStop(command):
 def setupPlay(command):
     if command.type == eventconsts.TYPE_UNKNOWN:
         command.handle("Register play button")
-        detector.addEvent(command.status, command.note, eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_PLAY)
+        detector.addEvent(command.status, command.note, command.value, eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_PLAY)
         learn.setCurrent(eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_LOOP, "Press the loop button", True)
 
 def setupLoop(command):
     if command.type == eventconsts.TYPE_UNKNOWN:
         command.handle("Register loop button")
-        detector.addEvent(command.status, command.note, eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_LOOP)
+        detector.addEvent(command.status, command.note, command.value, eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_LOOP)
     elif command.getId() == (eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_STOP):
         command.handle("No loop button")
     else:
@@ -50,7 +50,7 @@ def setupLoop(command):
 def setupRec(command):
     if command.type == eventconsts.TYPE_UNKNOWN:
         command.handle("Register record button")
-        detector.addEvent(command.status, command.note, eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_REC)
+        detector.addEvent(command.status, command.note, command.value, eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_REC)
     elif command.getId() == (eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_STOP):
         command.handle("No record button")
     else:
@@ -60,7 +60,7 @@ def setupRec(command):
 def setupSkipForward(command):
     if command.type == eventconsts.TYPE_UNKNOWN:
         command.handle("Register fast-forward button")
-        detector.addEvent(command.status, command.note, eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_SKIP_FORWARD)
+        detector.addEvent(command.status, command.note, command.value, eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_SKIP_FORWARD)
         learn.setCurrent(eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_SKIP_BACK, "Press the rewind button")
     elif command.getId() == (eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_STOP):
         command.handle("No skip buttons")
@@ -69,21 +69,21 @@ def setupSkipForward(command):
 def setupSkipBackward(command):
     if command.type == eventconsts.TYPE_UNKNOWN:
         command.handle("Register rewind button")
-        detector.addEvent(command.status, command.note, eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_SKIP_BACK)
+        detector.addEvent(command.status, command.note, command.value, eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_SKIP_BACK)
         learn.setCurrent(eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_NEXT, "Press the next track button", True)
         
 def setupNextTrack(command):
     if command.type == eventconsts.TYPE_UNKNOWN:
         command.handle("Register next track button")
-        detector.addEvent(command.status, command.note, eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_NEXT)
+        detector.addEvent(command.status, command.note, command.value, eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_NEXT)
         learn.setCurrent(eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_PREV, "Press the previous track button")
     if command.getId() == (eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_STOP):
         command.handle("No track increment buttons.")
-        fader.setLearnFirstFader()
+        learn.setCurrent(eventconsts.TYPE_JOG, eventconsts.CONTROL_JOG_FORWARD, "Move the jog wheel forwards", True)
 
 def setupPrevTrack(command):
     if command.type == eventconsts.TYPE_UNKNOWN:
         command.handle("Register previous track button")
-        detector.addEvent(command.status, command.note, eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_PREV)
+        detector.addEvent(command.status, command.note, command.value, eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_PREV)
         command.refreshId()
-        fader.setLearnFirstFader()
+        learn.setCurrent(eventconsts.TYPE_JOG, eventconsts.CONTROL_JOG_FORWARD, "Move the jog wheel forwards", True)

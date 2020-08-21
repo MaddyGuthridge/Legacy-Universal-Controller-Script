@@ -16,6 +16,14 @@ CONTROL_NEXT = "Next"
 CONTROL_PREV = "Previous"
 
 #####################################
+TYPE_JOG = "Jog"
+
+CONTROL_JOG_FORWARD = "Forward"
+CONTROL_JOG_BACKWARD = "Backward"
+CONTROL_JOG_PUSH = "Push"
+CONTROL_JOG_PULL = "Pull"
+
+#####################################
 TYPE_FADER = "Fader"
 
 CONTROL_MASTER_FADER = -1

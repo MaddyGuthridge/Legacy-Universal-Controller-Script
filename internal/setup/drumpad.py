@@ -15,7 +15,7 @@ def setupDrums(command):
     global x_coord, y_coord
     if command.type == eventconsts.TYPE_UNKNOWN and command.is_lift:
         command.handle("Register drum pad")
-        detector.addEvent(command.status, command.note, eventconsts.TYPE_DRUM_PAD, (x_coord, y_coord))
+        detector.addEvent(command.status, command.note, command.value, eventconsts.TYPE_DRUM_PAD, (x_coord, y_coord))
         x_coord += 1
         learn.setCurrent(eventconsts.TYPE_DRUM_PAD, (x_coord, y_coord), "Press the (" + str(x_coord+1) + ", " + str(y_coord+1) + ") drum pad")
         print("If that was the last drum pad in this row, press the stop button.")
