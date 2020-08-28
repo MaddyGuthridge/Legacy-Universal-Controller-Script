@@ -1,3 +1,11 @@
+"""
+internal > setup > fader.py
+
+Allows for the setup of faders
+
+Author: Miguel Guthridge
+"""
+
 from ..parse import detector
 from .. import consts
 from .setup import learn

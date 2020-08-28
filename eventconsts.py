@@ -1,4 +1,10 @@
+"""
+eventconsts.py
 
+Contains constants for identifying events.
+
+Author: Miguel Guthridge
+"""
 #####################################
 
 TYPE_UNKNOWN  = "Unknown"

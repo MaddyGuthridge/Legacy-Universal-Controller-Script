@@ -1,3 +1,12 @@
+"""
+eventprocessor > eventprocessor.py
+
+Redirects commands to be processed by relevant functions.
+
+Author: Miguel Guthridge
+"""
+
+
 import internal
 
 from . import processdefault

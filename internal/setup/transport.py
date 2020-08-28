@@ -1,3 +1,11 @@
+"""
+internal > setup > transport.py
+
+Allows for the setup of transport buttons
+
+Author: Miguel Guthridge
+"""
+
 from ..parse import detector
 from .setup import learn
 from . import fader

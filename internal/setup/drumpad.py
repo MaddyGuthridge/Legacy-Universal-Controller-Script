@@ -1,3 +1,11 @@
+"""
+internal > setup > drumpad.py
+
+Allows for the setup of drumpads
+
+Author: Miguel Guthridge
+"""
+
 from ..parse import detector
 from .. import consts
 from .setup import learn, initState

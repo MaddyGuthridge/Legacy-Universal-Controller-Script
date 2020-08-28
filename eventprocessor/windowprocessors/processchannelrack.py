@@ -3,8 +3,7 @@ eventprocessor > windowprocessors > processchannelrack.py
 
 From Novation LaunchKey Mk2 Script by Miguel Guthridge.
 Available under GNU GPL3 at https://github.com/MiguelGuthridge/Novation-LaunchKey-Mk2-Script
-
-From v1.4.0
+Adapted from v2.0.0
 
 This script handles events when the channel rack is active.
 It provides functionality such as setting channel volumes/pans.

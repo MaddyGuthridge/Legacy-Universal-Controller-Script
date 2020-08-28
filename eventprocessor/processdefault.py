@@ -1,3 +1,12 @@
+"""
+eventprocessor > processdefault.py
+
+Provides default actions for controllers.
+
+Author: Miguel Guthridge
+"""
+
+
 import transport
 import ui
 import midi

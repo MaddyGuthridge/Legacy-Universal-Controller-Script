@@ -1,3 +1,11 @@
+"""
+internal > setup > jog.py
+
+Allows for the setup of jog wheels
+
+Author: Miguel Guthridge
+"""
+
 import eventconsts
 from ..parse import detector
 from .setup import learn

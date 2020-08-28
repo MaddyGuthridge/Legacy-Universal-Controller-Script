@@ -3,8 +3,7 @@ eventprocessor > pluginprocessors > processplugins.py
 
 From Novation LaunchKey Mk2 Script by Miguel Guthridge.
 Available under GNU GPL3 at https://github.com/MiguelGuthridge/Novation-LaunchKey-Mk2-Script
-
-From v1.4.0
+Adapted from v2.0.0
 
 This script forwards events to any plugin processors that can handle the currently active plugin.
 More plugin processors can be added by adding them to the import list.
@@ -15,7 +14,7 @@ Author: Miguel Guthridge
 #
 # Add custom event processors to this list
 #
-imports = ["template_plugin"]
+imports = []
 #
 #
 #

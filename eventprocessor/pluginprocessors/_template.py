@@ -1,10 +1,9 @@
 """
-eventprocessor > pluginprocessors > template_plugin.py
+eventprocessor > pluginprocessors > _template.py
 
-From Novation LaunchKey Mk2 Script by Miguel Guthridge.
+Adapted from Novation LaunchKey Mk2 Script by Miguel Guthridge.
 Available under GNU GPL3 at https://github.com/MiguelGuthridge/Novation-LaunchKey-Mk2-Script
-
-From v1.4.0
+Adapted from v2.0.0
 
 The file acts as a template for plugin handlers. Copy it and edit to add your own plugin handlers.
 To get it to be imported by the event processor, add its filename (without the .py) to processplugins.py

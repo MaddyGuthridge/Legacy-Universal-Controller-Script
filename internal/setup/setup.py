@@ -50,21 +50,22 @@ def initialise():
     print(consts.SCRIPT_NAME)
     print("By " + consts.SCRIPT_AUTHOR)
     print(helpers.getLineBreak())
-    print("Version " + str(consts.SCRIPT_VERSION_MAJOR) + "." + str(consts.SCRIPT_VERSION_MINOR) + str(consts.SCRIPT_VERSION_REVISION) 
+    print("Version " + str(consts.SCRIPT_VERSION_MAJOR) + "." + str(consts.SCRIPT_VERSION_MINOR) + "." + str(consts.SCRIPT_VERSION_REVISION)
           + " " + consts.SCRIPT_VERSION_SUFFIX)
     print(helpers.getLineBreak())
     print(helpers.getLineBreak())
     print("")
     
-    # For the moment just initialise the script to setup mode.
-    # Eventually we'll try to read a configuration file to load the state of the script
+    
+    # Try to read a configuration file to load the state of the script
+    # If that fails, enter setup mode
 
     try:
         __import__("autoinit")
         initState.setVal(consts.INIT_SUCCESS)
     except:
         initState.setVal(consts.INIT_SETUP)
-
+    
     if initState == consts.INIT_SETUP:
         learn.setCurrent(eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_STOP, "Press the stop button")
 

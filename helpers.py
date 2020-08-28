@@ -1,4 +1,10 @@
+"""
+helpers.py
 
+Contains helper functions for things
+
+Author: Miguel Guthridge
+"""
 import internal.consts
 import config
 

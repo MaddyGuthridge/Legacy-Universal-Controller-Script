@@ -21,6 +21,37 @@ class EventDetector:
     drum_pad_controls = dict()
     basic_controls = dict()
     
+    def checkKey(self, event_type, control):
+        """Checks if a control is available on the controller.
+
+        Args:
+            event_type (str): Event type name
+            control (key): Control key
+
+        Returns:
+            bool: Whether the key exists
+        """
+        if event_type == eventconsts.TYPE_TRANSPORT:
+            return control in self.transport_controls.values()
+        
+        elif event_type == eventconsts.TYPE_JOG:
+            return control in self.jog_controls.values()
+        
+        elif event_type == eventconsts.TYPE_FADER:
+            return control in self.fader_controls.values()
+        
+        elif event_type == eventconsts.TYPE_FADER_BUTTON:
+            return control in self.fader_button_controls.values()
+        
+        elif event_type == eventconsts.TYPE_KNOB:
+            return control in self.knob_controls.values()
+        
+        elif event_type == eventconsts.TYPE_DRUM_PAD:
+            return control in self.drum_pad_controls.values()
+        
+        elif event_type == eventconsts.TYPE_BASIC:
+            return control in self.basic_controls.values()
+    
     def recognise(self, status, note, value):
         id_val = (status, note)
         event_val = (status, note, value)
