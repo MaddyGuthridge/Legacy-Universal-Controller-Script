@@ -36,9 +36,9 @@ def process(command):
     # Faders
     #---------------------------------
     if command.type == eventconsts.TYPE_FADER:
-        fader_num = command.control + 1
+        fader_num = command.control
 
-        if fader_num == 0:
+        if fader_num == eventconsts.CONTROL_MASTER_FADER:
             channel_num = current_channel
         else:
             channel_num = fader_num
@@ -51,7 +51,7 @@ def process(command):
     if command.type == eventconsts.TYPE_KNOB:
         knob_num = command.control
 
-        if knob_num == 0:
+        if knob_num == eventconsts.CONTROL_MASTER_KNOB:
             channel_num = current_channel
         else:
             channel_num = knob_num
@@ -64,7 +64,7 @@ def process(command):
     #---------------------------------
     if command.type == eventconsts.TYPE_FADER_BUTTON:
         fader_num = command.control
-        if fader_num == 0:
+        if fader_num == eventconsts.CONTROL_MASTER_FADER_BUTTON:
             channel_num = current_channel
         else:
             channel_num = fader_num
