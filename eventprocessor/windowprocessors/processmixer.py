@@ -44,7 +44,7 @@ def process(command):
     #---------------------------------
     # Mixer Buttons - mute/solo tracks
     #---------------------------------
-    if command.type == eventconsts.TYPE_FADER_BUTTON:
+    if command.type == eventconsts.TYPE_FADER_BUTTON or command.type == eventconsts.TYPE_SOLO_BUTTON:
         processFaderButtons(command)
 
     #---------------------------------
@@ -103,27 +103,44 @@ def topWindowEnd():
     return
 
 def processMuteSolo(track, command):
-    if command.value == 0: return
-    if mixer.isTrackSolo(track):
-        mixer.soloTrack(track)
-        command.actions.appendAction("Unsolo track " + str(track))
+    if command.value == 0: 
+        command.handle("Button lift")
         return
-    mixer.muteTrack(track)
-    if command.is_double_click:
-        mixer.soloTrack(track)
-        command.actions.appendAction("Solo track " + str(track))
-    else: 
-        if mixer.isTrackMuted(track):
-            command.actions.appendAction("Mute track " + str(track))
+    if internal.controllerinfo.hasSeperateSoloButtons():
+        if command.type == eventconsts.TYPE_FADER_BUTTON:
+            mixer.muteTrack(track)
+            if mixer.isTrackMuted(track):
+                command.handle("Mute track " + str(track))
+            else: 
+                command.handle("Unmute track " + str(track))
+        elif command.type == eventconsts.TYPE_SOLO_BUTTON:
+            mixer.soloTrack(track)
+            if mixer.isTrackSolo(track):
+                command.handle("Solo track " + str(track))
+            else: 
+                command.handle("Unsolo track " + str(track))
+                
+    else:
+        if mixer.isTrackSolo(track):
+            mixer.soloTrack(track)
+            command.handle("Unsolo track " + str(track))
+            return
+        mixer.muteTrack(track)
+        if command.is_double_click:
+            mixer.soloTrack(track)
+            command.handle("Solo track " + str(track))
         else: 
-            command.actions.appendAction("Unmute track " + str(track))
+            if mixer.isTrackMuted(track):
+                command.handle("Mute track " + str(track))
+            else: 
+                command.handle("Unmute track " + str(track))
 
 def setVolume(command, track, value):
     volume = getVolumeSend(value)
     mixer.setTrackVolume(track, volume)
-    command.actions.appendAction("Set " + mixer.getTrackName(track) + " volume to " + getVolumeValue(value))
+    command.handle("Set " + mixer.getTrackName(track) + " volume to " + getVolumeValue(value))
     if processorhelpers.didSnap(processorhelpers.toFloat(value), internal.consts.MIXER_VOLUME_SNAP_TO):
-        command.actions.appendAction("[Snapped]")
+        command.handle("[Snapped]")
 
 # Returns volume value set to send to FL Studio
 def getVolumeSend(inVal):
@@ -139,9 +156,9 @@ def getVolumeValue(inVal):
 def setPan(command, track, value):
     volume = getPanSend(value)
     mixer.setTrackPan(track, volume)
-    command.actions.appendAction("Set " + mixer.getTrackName(track) + " pan to " + getPanValue(value))
+    command.handle("Set " + mixer.getTrackName(track) + " pan to " + getPanValue(value))
     if processorhelpers.didSnap(processorhelpers.toFloat(value, -1), internal.consts.MIXER_PAN_SNAP_TO):
-        command.actions.appendAction("[Snapped]")
+        command.handle("[Snapped]")
 
 # Returns volume value set to send to FL Studio
 def getPanSend(inVal):

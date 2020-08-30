@@ -60,9 +60,9 @@ def process(command):
 
 
     #---------------------------------
-    # Mixer Buttons - mute/solo tracks
+    # Mixer Buttons - mute/solo channels
     #---------------------------------
-    if command.type == eventconsts.TYPE_FADER_BUTTON:
+    if command.type == eventconsts.TYPE_FADER_BUTTON or command.type == eventconsts.TYPE_SOLO_BUTTON:
         fader_num = command.control
         if fader_num == eventconsts.CONTROL_MASTER_FADER_BUTTON:
             channel_num = current_channel
@@ -94,22 +94,36 @@ def processMuteSolo(channel, command):
         command.handle("Channel out of range. Couldn't process mute", silent=True)
         return
 
-    if command.value == 0: return
-    if channels.isChannelSolo(channel) and channels.channelCount() != 1:
-        channels.soloChannel(channel)
-        action = "Unsolo channel"
-        
-    elif command.is_double_click:
-        channels.soloChannel(channel)
-        action = "Solo channel"
-    else: 
-        channels.muteChannel(channel)
-        if channels.isChannelMuted(channel):
-            action = "Mute channel"
+    if command.value == 0:
+        command.handle("Ignore lifts")
+        return
+    if internal.controllerinfo.hasSeperateSoloButtons():
+        if command.type == eventconsts.TYPE_FADER_BUTTON:
+            channels.muteChannel(channel)
+            if channels.isChannelMuted(channel):
+                command.handle("Mute channel " + str(channel))
+            else: 
+                command.handle("Unmute channel " + str(channel))
+        elif command.type == eventconsts.TYPE_SOLO_BUTTON:
+            channels.soloChannel(channel)
+            if channels.isChannelSolo(channel):
+                command.handle("Solo channel " + str(channel))
+            else: 
+                command.handle("Unsolo channel " + str(channel))
+    else:
+        if channels.isChannelSolo(channel) and channels.channelCount() != 1:
+            channels.soloChannel(channel)
+            command.handle("Unsolo channel")
+            
+        elif command.is_double_click:
+            channels.soloChannel(channel)
+            command.handle("Solo channel")
         else: 
-            action = "Unmute channel"
-
-    command.handle(action)
+            channels.muteChannel(channel)
+            if channels.isChannelMuted(channel):
+                command.handle("Mute channel")
+            else: 
+                command.handle("Unmute channel")
 
 def setVolume(command, channel, value):
 

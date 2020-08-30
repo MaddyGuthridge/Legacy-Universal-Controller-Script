@@ -8,3 +8,4 @@ Author: Miguel Guthridge
 
 from .setup import initState
 from .windowstate import window
+from . import controllerinfo

@@ -52,6 +52,17 @@ def numFaderButtons():
     """
     return len(detector.fader_button_controls) - 1
 
+def hasSeperateSoloButtons():
+    return detector.checkKey(eventconsts.TYPE_SOLO_BUTTON, eventconsts.CONTROL_MASTER_SOLO_BUTTON)
+
+def numSoloButtons():
+    """Returns the number of solo buttons (excluding the master solo button)
+
+    Returns:
+        int: number of non-master solo buttons
+    """
+    return len(detector.solo_button_controls) - 1
+
 def hasKnobs():
     return detector.checkKey(eventconsts.TYPE_KNOB, eventconsts.CONTROL_MASTER_KNOB)
 
