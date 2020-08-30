@@ -80,6 +80,8 @@ def processSetup(command):
         fader.setupFader(command)
     elif learn[0] == eventconsts.TYPE_FADER_BUTTON:
         fader.setupFaderButton(command)
+    elif learn[0] == eventconsts.TYPE_SOLO_BUTTON:
+        fader.setupSoloButton(command)
     elif learn[0] == eventconsts.TYPE_KNOB:
         fader.setupKnob(command)
     elif learn[0] == eventconsts.TYPE_DRUM_PAD:

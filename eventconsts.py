@@ -35,9 +35,15 @@ TYPE_FADER = "Fader"
 CONTROL_MASTER_FADER = -1
 
 #####################################
+# Mute button only when solo button available
 TYPE_FADER_BUTTON = "Fader Button"
 
 CONTROL_MASTER_FADER_BUTTON = -1
+
+#####################################
+TYPE_SOLO_BUTTON = "Solo button"
+
+CONTROL_MASTER_SOLO_BUTTON = -1
 
 #####################################
 TYPE_KNOB = "Knob"

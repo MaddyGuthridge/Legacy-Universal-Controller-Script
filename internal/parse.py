@@ -17,6 +17,7 @@ class EventDetector:
     jog_controls = dict()
     fader_controls = dict()
     fader_button_controls = dict()
+    solo_button_controls = dict()
     knob_controls = dict()
     drum_pad_controls = dict()
     basic_controls = dict()
@@ -43,6 +44,9 @@ class EventDetector:
         elif event_type == eventconsts.TYPE_FADER_BUTTON:
             return control in self.fader_button_controls.values()
         
+        elif event_type == eventconsts.TYPE_SOLO_BUTTON:
+            return control in self.solo_button_controls.values()
+        
         elif event_type == eventconsts.TYPE_KNOB:
             return control in self.knob_controls.values()
         
@@ -67,6 +71,9 @@ class EventDetector:
 
         elif id_val in self.fader_button_controls:
             return eventconsts.TYPE_FADER_BUTTON, self.fader_button_controls[id_val]
+        
+        elif id_val in self.solo_button_controls:
+            return eventconsts.TYPE_SOLO_BUTTON, self.solo_button_controls[id_val]
         
         elif id_val in self.knob_controls:
             return eventconsts.TYPE_KNOB, self.knob_controls[id_val]
@@ -96,6 +103,9 @@ class EventDetector:
         
         elif event_type == eventconsts.TYPE_FADER_BUTTON:
             self.fader_button_controls[id_val] = control
+        
+        elif event_type == eventconsts.TYPE_SOLO_BUTTON:
+            self.solo_button_controls[id_val] = control
         
         elif event_type == eventconsts.TYPE_KNOB:
             self.knob_controls[id_val] = control
@@ -151,6 +161,15 @@ class EventDetector:
         for key, value in self.fader_button_controls.items():
             print("detector.addEvent(" + str(key[0]) + ", " + str(key[1])
                   + ", 0, \"" + eventconsts.TYPE_FADER_BUTTON + "\", "
+                  + str(value) + ")"
+                )
+        print("")
+        print("")
+        print("# Solo Buttons")
+        print("")
+        for key, value in self.solo_button_controls.items():
+            print("detector.addEvent(" + str(key[0]) + ", " + str(key[1])
+                  + ", 0, \"" + eventconsts.TYPE_SOLO_BUTTON + "\", "
                   + str(value) + ")"
                 )
         print("")
