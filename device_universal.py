@@ -32,6 +32,9 @@ def OnMidiIn(event):
     elif internal.initState == internal.consts.INIT_SUCCESS:
         eventprocessor.process(command)
     
+    if command.handled:
+        event.handled = True
+    
     command_str = str(command)
     if len(command_str):
         print(command_str)
