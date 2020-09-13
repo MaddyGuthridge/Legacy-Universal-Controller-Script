@@ -75,4 +75,19 @@ def numKnobs():
     return len(detector.knob_controls) - 1
 
 def hasDrumPads():
+    """Returns whether the controller has drum pads
+
+    Returns:
+        bool: whether drum pads are available on the device
+    """
     return len(detector.drum_pad_controls) != 0
+
+def sizeDrumPads():
+    """Returns the size of the set of drum pads
+
+    Returns:
+        tuple: size
+            - int: width
+            - int: height
+    """
+    return detector.drum_pads_num_x, detector.drum_pads_num_y

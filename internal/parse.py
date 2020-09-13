@@ -22,6 +22,9 @@ class EventDetector:
     drum_pad_controls = dict()
     basic_controls = dict()
     
+    drum_pads_num_x = 0
+    drum_pads_num_y = 0
+    
     def checkKey(self, event_type, control):
         """Checks if a control is available on the controller.
 
@@ -113,6 +116,10 @@ class EventDetector:
         elif event_type == eventconsts.TYPE_DRUM_PAD:
             # Use only note because drum pads use note events
             self.drum_pad_controls[(channel, note)] = control
+            if control[0] > self.drum_pads_num_x:
+                self.drum_pads_num_x = control[0] + 1
+            if control[1] > self.drum_pads_num_y:
+                self.drum_pads_num_y = control[1] + 1
         
         elif event_type == eventconsts.TYPE_BASIC:
             self.basic_controls[id_val] = control
