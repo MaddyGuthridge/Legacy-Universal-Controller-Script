@@ -10,4 +10,4 @@ That being said, I want to hear your feedback. What do you want to see in the sc
 
 Here's your link:
 
-https://discord.gg/kAkzYV
+https://discord.gg/6vpfJUF
