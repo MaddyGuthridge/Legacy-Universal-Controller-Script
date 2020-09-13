@@ -7,7 +7,6 @@ Author: Miguel Guthridge
 """
 
 from .. import consts
-from ..parse import detector
 
 import helpers
 import eventconsts
@@ -105,3 +104,4 @@ def offerPrintout(command):
 
 from . import transport, jog, fader, drumpad
 
+from ..parse import detector

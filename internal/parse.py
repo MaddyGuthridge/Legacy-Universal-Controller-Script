@@ -12,6 +12,7 @@ import config
 from . import consts
 import processorhelpers
 
+
 class EventDetector:
     transport_controls = dict()
     jog_controls = dict()
@@ -63,6 +64,7 @@ class EventDetector:
         id_val = (status, note)
         event_val = (status, note, value)
         channel = status & int('00001111', 2)
+        type_val = status >> 4
         if id_val in self.transport_controls:
             return eventconsts.TYPE_TRANSPORT, self.transport_controls[id_val]
         
@@ -87,6 +89,12 @@ class EventDetector:
         
         elif id_val in self.basic_controls:
             return eventconsts.TYPE_BASIC, self.basic_controls[id_val]
+
+        elif initState.getVal() == consts.INIT_SUCCESS and type_val == 9:
+            return eventconsts.TYPE_BASIC, eventconsts.CONTROL_NOTE_ON
+        
+        elif initState.getVal() == consts.INIT_SUCCESS and type_val == 8:
+            return eventconsts.TYPE_BASIC, eventconsts.CONTROL_NOTE_OFF
 
         else:
             return eventconsts.TYPE_UNKNOWN, "Null"
@@ -260,4 +268,4 @@ class ParsedEvent:
         self.actions.addProcessor(name)
 
 
-
+from .setup.setup import initState

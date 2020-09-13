@@ -55,3 +55,6 @@ TYPE_DRUM_PAD = "Drum Pad"
 
 #####################################
 TYPE_BASIC = "Basic"
+
+CONTROL_NOTE_ON = "Note on"
+CONTROL_NOTE_OFF = "Note off"
