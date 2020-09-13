@@ -32,5 +32,5 @@ AUTOCANCEL_SUSTAINED_SHIFT = False
 PITCH_BEND_JOG_SPEED = 0.05
 
 # Controls which console messages are printed. Add things from the DEBUG object
-CONSOLE_DEBUG_MODE = [DEBUG.EVENT_DATA, DEBUG.EVENT_ACTIONS]
+CONSOLE_DEBUG_MODE = []
 
