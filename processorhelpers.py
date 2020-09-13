@@ -256,16 +256,14 @@ class ActionPrinter:
 class RawEvent:
     """Stores event in raw form. A quick way to generate events for editing.
     """
-    def __init__(self, status, data1, data2, shift = False):
+    def __init__(self, status, data1, data2):
         """Create a RawEvent object
 
         Args:
             status (int): Status byte
             data1 (int): First data byte
             data2 (int): 2nd data byte
-            shift (bool, optional): Whether the event is shifted. Defaults to False.
         """
         self.status = status
         self.data1 = data1
         self.data2 = data2
-        self.shift = shift

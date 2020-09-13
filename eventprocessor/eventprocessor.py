@@ -16,7 +16,12 @@ def process(command):
     
     windowprocessors.process(command)
     
-    if command.handled:
+    if command.ignored:
+        return
+    
+    pluginprocessors.process(command)
+    
+    if command.ignored:
         return
     
     processdefault.process(command)

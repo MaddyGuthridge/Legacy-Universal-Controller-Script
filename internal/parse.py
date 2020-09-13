@@ -226,6 +226,8 @@ class ParsedEvent:
         self.value = event.data2
         
         self.handled = False
+        self.ignored = False
+        self.edited = False
         
         self.is_lift = not self.value
         
@@ -251,6 +253,21 @@ class ParsedEvent:
         
         return ret
 
+    def edit(self, event, reason, ignore=True):
+        
+        self.ignored = ignore
+        self.act(reason, True)
+        
+        self.status = event.status
+        self.note = event.data1
+        self.value = event.data2
+        
+        self.is_lift = not self.value
+        
+        self.edited = True
+        
+        self.refreshId()
+
     def getId(self):
         return (self.type, self.control)
     
@@ -259,7 +276,12 @@ class ParsedEvent:
         
     def handle(self, action, silent=False):
         self.handled = True
+        self.ignored = True
         self.actions.appendAction(action, silent, True)
+    
+    def ignore(self, action, silent=True):
+        self.ignored = True
+        self.actions.appendAction(action, silent, False)
         
     def act(self, action, silent=True):
         self.actions.appendAction(action, silent, False)

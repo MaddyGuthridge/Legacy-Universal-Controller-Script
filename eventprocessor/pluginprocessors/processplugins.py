@@ -14,7 +14,7 @@ Author: Miguel Guthridge
 #
 # Add custom event processors to this list
 #
-imports = []
+imports = ["fpc"]
 #
 #
 #
