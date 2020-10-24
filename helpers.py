@@ -48,6 +48,34 @@ def getTab(string, multiplier = 1, length = internal.consts.LOG_TAB_LENGTH):
         string += " "
     return string
 
+def getModuleName(string):
+    """Returns the name of a module by replacing non-module-able characters
+    """ 
+    # Loop over string and strip bad characters
+    
+    
+    i = 0
+    found_non_digit = False
+    while i < len(string):
+        
+        if string[i].isdigit():
+            if not found_non_digit:
+                string = string[ : i] + string[i + 1 : ]
+                continue
+        else:
+            found_non_digit = True
+        
+        if string[i] == '-':
+            string = string[ : i] + string[i + 1 : ]
+            continue
+        
+        elif string[i] == ' ':
+            string = string[ : i] + '_' + string[i + 1 : ]
+        
+        i += 1
+    
+    return string
+        
 
 def debugLog(message, level = 0):
     """Print a message for debugging, but only if the debug mode includes the debug type specified
