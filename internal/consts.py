@@ -16,7 +16,7 @@ SCRIPT_AUTHOR = "Miguel Guthridge"
 SCRIPT_ADDRESS = "https://github.com/MiguelGuthridge/Universal-Controller-Script"
 
 SCRIPT_VERSION_MAJOR = 0
-SCRIPT_VERSION_MINOR = 2
+SCRIPT_VERSION_MINOR = 3
 SCRIPT_VERSION_REVISION = 0
 SCRIPT_VERSION_SUFFIX = "Beta"
 

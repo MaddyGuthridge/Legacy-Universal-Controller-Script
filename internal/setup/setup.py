@@ -11,6 +11,8 @@ from .. import consts
 import helpers
 import eventconsts
 
+import device
+
 class InitState:
     state = consts.INIT_INCOMPLETE
 
@@ -45,12 +47,17 @@ class Learner:
 learn = Learner()
 
 def initialise():
+    
+    device_name = device.getName()
+    
     print(helpers.getLineBreak())
     print(consts.SCRIPT_NAME)
     print("By " + consts.SCRIPT_AUTHOR)
     print(helpers.getLineBreak())
     print("Version " + str(consts.SCRIPT_VERSION_MAJOR) + "." + str(consts.SCRIPT_VERSION_MINOR) + "." + str(consts.SCRIPT_VERSION_REVISION)
           + " " + consts.SCRIPT_VERSION_SUFFIX)
+    print(helpers.getLineBreak())
+    print("Running on \"" + device_name + "\"")
     print(helpers.getLineBreak())
     print(helpers.getLineBreak())
     print("")
@@ -60,9 +67,21 @@ def initialise():
     # If that fails, enter setup mode
 
     try:
-        __import__("autoinit")
-        initState.setVal(consts.INIT_SUCCESS)
+        __import__("deviceconfig." + helpers.getModuleName(device_name))
+        
+        try:
+            import deviceconfig
+            getattr(deviceconfig, helpers.getModuleName(device_name)).initialise()
+        
+            initState.setVal(consts.INIT_SUCCESS)
+        except:
+            print("An error occurred whilst initialising the controller")
+            print("The device's autoinit.py file could be missing or broken. Begin manual setup.")
+            initState.setVal(consts.INIT_SETUP)
+            
     except:
+        print("An error occurred whilst importing the initialisation module.")
+        print("The device's configuration files could be missing. Begin manual setup.")
         initState.setVal(consts.INIT_SETUP)
     
     if initState == consts.INIT_SETUP:
