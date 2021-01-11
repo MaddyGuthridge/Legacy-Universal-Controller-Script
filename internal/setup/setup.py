@@ -74,13 +74,15 @@ def initialise():
             getattr(deviceconfig, helpers.getModuleName(device_name)).initialise()
         
             initState.setVal(consts.INIT_SUCCESS)
-        except:
+        except Exception as e:
             print("An error occurred whilst initialising the controller")
+            print("Error message:", e)
             print("The device's autoinit.py file could be missing or broken. Begin manual setup.")
             initState.setVal(consts.INIT_SETUP)
             
-    except:
+    except Exception as e:
         print("An error occurred whilst importing the initialisation module.")
+        print("Error message:", e)
         print("The device's configuration files could be missing. Begin manual setup.")
         initState.setVal(consts.INIT_SETUP)
     
