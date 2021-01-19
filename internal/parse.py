@@ -232,6 +232,16 @@ class ParsedEvent:
         self.ignored = False
         self.edited = False
         
+        self.actions = processorhelpers.ActionPrinter()
+        
+        self.sysex = event.sysex
+        
+        # Identify sysex messages manually
+        if self.sysex is not None:
+            self.type = eventconsts.TYPE_SYSEX
+            self.control = ""
+            return
+        
         self.is_lift = not self.value
         
         self.refreshId()
@@ -241,7 +251,7 @@ class ParsedEvent:
         else:
             self.is_double_click = processorhelpers.isDoubleClickLift(self.getId())
         
-        self.actions = processorhelpers.ActionPrinter()
+        
 
     def __str__(self):
         

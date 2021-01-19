@@ -50,6 +50,9 @@ def getTab(string, multiplier = 1, length = internal.consts.LOG_TAB_LENGTH):
 
 def getModuleName(string):
     """Returns the name of a module by replacing non-module-able characters
+    
+    
+    DEPRECATED as of v0.4: Using sysex to identify devices
     """ 
     # Loop over string and strip bad characters
     

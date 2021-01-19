@@ -62,23 +62,35 @@ def initialise():
     print(helpers.getLineBreak())
     print("")
     
+    # Send universal device enquiry
+    device.midiOutSysex(consts.DEVICE_ENQUIRY_MESSAGE)
+    
+
+def processInitMessage(command):
+    # Recieves a universal device query response
+    
+    # If command isn't response to device enquiry
+    if not command.type is eventconsts.TYPE_SYSEX:
+        return
+    
+    device_name = "_" + command.sysex[5 : -5].hex()
     
     # Try to read a configuration file to load the state of the script
     # If that fails, enter setup mode
 
     try:
-        __import__("deviceconfig." + helpers.getModuleName(device_name))
+        __import__("deviceconfig." + device_name)
         
         try:
             import deviceconfig
-            getattr(deviceconfig, helpers.getModuleName(device_name)).initialise()
+            getattr(deviceconfig, device_name).initialise()
         
             initState.setVal(consts.INIT_SUCCESS)
         except Exception as e:
             print("An error occurred whilst initialising the controller")
             print("Error message:", e)
-            print("The device's autoinit.py file could be missing or broken. Begin manual setup.")
-            initState.setVal(consts.INIT_SETUP)
+            print("The device's autoinit.py file could be missing or broken.")
+            initState.setVal(consts.INIT_FAIL)
             
     except Exception as e:
         print("An error occurred whilst importing the initialisation module.")
@@ -88,7 +100,6 @@ def initialise():
     
     if initState == consts.INIT_SETUP:
         learn.setCurrent(eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_STOP, "Press the stop button")
-
 
 def processSetup(command):
     command.addProcessor("Setup processor")

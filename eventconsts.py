@@ -9,6 +9,9 @@ Author: Miguel Guthridge
 
 TYPE_UNKNOWN  = "Unknown"
 
+SYSEX = 30
+TYPE_SYSEX = "Sysex"
+
 #####################################
 TYPE_TRANSPORT = "Transport"
 
