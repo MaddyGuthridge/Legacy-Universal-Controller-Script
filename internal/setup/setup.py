@@ -76,10 +76,12 @@ def processInitMessage(command):
     if not command.type is eventconsts.TYPE_SYSEX:
         return
     
-    device_name = command.sysex[5 : -5].hex()
+    device_id = command.sysex[5 : -5].hex()
+    
+    print("Device ID: " + device_id)
     
     # Import the configuration for the controller
-    result = deviceconfig.loadSetup(device_name)
+    result = deviceconfig.loadSetup(device_id)
     
     if result == 0:
         print("An autoinit file could not be found for your device")
