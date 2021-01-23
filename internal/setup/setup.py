@@ -78,7 +78,7 @@ def processInitMessage(command):
     
     device_id = command.sysex[5 : -5].hex()
     
-    print("Device ID: " + device_id)
+    print("Device ID: \"" + device_id + "\"")
     
     # Import the configuration for the controller
     result = deviceconfig.loadSetup(device_id)
