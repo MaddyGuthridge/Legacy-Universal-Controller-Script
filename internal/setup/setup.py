@@ -10,6 +10,7 @@ from .. import consts
 
 import helpers
 import eventconsts
+import deviceconfig
 
 import device
 
@@ -73,30 +74,26 @@ def processInitMessage(command):
     if not command.type is eventconsts.TYPE_SYSEX:
         return
     
-    device_name = "_" + command.sysex[5 : -5].hex()
+    device_name = command.sysex[5 : -5].hex()
     
-    # Try to read a configuration file to load the state of the script
-    # If that fails, enter setup mode
-
-    try:
-        __import__("deviceconfig." + device_name)
-        
-        try:
-            import deviceconfig
-            getattr(deviceconfig, device_name).initialise()
-        
-            initState.setVal(consts.INIT_SUCCESS)
-        except Exception as e:
-            print("An error occurred whilst initialising the controller")
-            print("Error message:", e)
-            print("The device's autoinit.py file could be missing or broken.")
-            initState.setVal(consts.INIT_FAIL)
-            
-    except Exception as e:
-        print("An error occurred whilst importing the initialisation module.")
-        print("Error message:", e)
-        print("The device's configuration files could be missing. Begin manual setup.")
+    # Import the configuration for the controller
+    result = deviceconfig.loadSetup(device_name)
+    
+    if result == 0:
+        print("An autoinit file could not be found for your device")
+        print("Beginning manual setup")
         initState.setVal(consts.INIT_SETUP)
+    
+    elif result == -1:
+        print("A compatible configuration was found but an error occurred while importing it")
+        initState.setVal(consts.INIT_FAIL)
+    
+    else:
+        if result == 1:
+            print("Device properties imported successfully")
+        if result == 2:
+            print("Device properties loaded from global configuration")
+        initState.setVal(consts.INIT_SUCCESS)
     
     if initState == consts.INIT_SETUP:
         learn.setCurrent(eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_STOP, "Press the stop button")
