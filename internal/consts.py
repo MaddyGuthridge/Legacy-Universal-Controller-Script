@@ -22,6 +22,9 @@ SCRIPT_VERSION_SUFFIX = "Beta"
 
 MIN_FL_SCRIPT_VERSION = 7
 
+# Help URLs
+################################
+HELP_URL_AUTOINIT = "https://github.com/MiguelGuthridge/Universal-Controller-Script/wiki/Autoinit-Scripts"
 
 # Init states
 ################################
@@ -31,6 +34,13 @@ INIT_SUCCESS = "Success"
 INIT_SETUP = "Setup"
 INIT_FAIL = "Fail"
 
+# Timeout for no device response
+INIT_TIMEOUT = 50
+
+# MIDI Messages
+################################
+
+DEVICE_INQUIRY_MESSAGE = bytes([0xF0, 0x7E, 0x7F, 0x06, 0x01, 0xF7])
 
 # Window constants
 ################################

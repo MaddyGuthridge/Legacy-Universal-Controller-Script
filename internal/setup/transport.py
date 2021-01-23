@@ -6,6 +6,8 @@ Allows for the setup of transport buttons
 Author: Miguel Guthridge
 """
 
+import ui
+
 from ..parse import detector
 from .setup import learn
 from . import fader
@@ -38,6 +40,8 @@ def setupStop(command):
     command.handle("Register stop button")
     
     learn.setCurrent(eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_PLAY, "Press the play button")
+    # Reset startup hint message
+    ui.setHintMsg("")
 
 def setupPlay(command):
     if command.type == eventconsts.TYPE_UNKNOWN:

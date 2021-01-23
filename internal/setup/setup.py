@@ -6,10 +6,14 @@ This script helps with initialising the script, and setting up the event detecto
 Author: Miguel Guthridge
 """
 
+import ui
+
 from .. import consts
+from ..windowstate import window
 
 import helpers
 import eventconsts
+import deviceconfig
 
 import device
 
@@ -62,33 +66,45 @@ def initialise():
     print(helpers.getLineBreak())
     print("")
     
+    # Send universal device inquiry
+    device.midiOutSysex(consts.DEVICE_INQUIRY_MESSAGE)
     
-    # Try to read a configuration file to load the state of the script
-    # If that fails, enter setup mode
 
-    try:
-        __import__("deviceconfig." + helpers.getModuleName(device_name))
-        
-        try:
-            import deviceconfig
-            getattr(deviceconfig, helpers.getModuleName(device_name)).initialise()
-        
-            initState.setVal(consts.INIT_SUCCESS)
-        except Exception as e:
-            print("An error occurred whilst initialising the controller")
-            print("Error message:", e)
-            print("The device's autoinit.py file could be missing or broken. Begin manual setup.")
-            initState.setVal(consts.INIT_SETUP)
-            
-    except Exception as e:
-        print("An error occurred whilst importing the initialisation module.")
-        print("Error message:", e)
-        print("The device's configuration files could be missing. Begin manual setup.")
+def processInitMessage(command):
+    # Recieves a universal device query response
+    
+    # If command isn't response to device inquiry
+    if not command.type is eventconsts.TYPE_SYSEX:
+        return
+    
+    device_id = command.sysex[5 : -5].hex()
+    
+    print("Device ID: \"" + device_id + "\"")
+    
+    # Import the configuration for the controller
+    result = deviceconfig.loadSetup(device_id)
+    
+    if result == 0:
+        print("An autoinit file could not be found for your device")
         initState.setVal(consts.INIT_SETUP)
     
+    elif result == -1:
+        print("A compatible configuration was found but an error occurred while importing it")
+        initState.setVal(consts.INIT_FAIL)
+    
+    else:
+        if result == 1:
+            print("Device properties imported successfully")
+        if result == 2:
+            print("Device properties loaded from global configuration")
+        initState.setVal(consts.INIT_SUCCESS)
+    
+    print(helpers.getLineBreak())
+    print("")
+    
     if initState == consts.INIT_SETUP:
-        learn.setCurrent(eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_STOP, "Press the stop button")
-
+        learn.setCurrent(eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_STOP, 
+                         "To begin manual setup, press the stop button on your controller")
 
 def processSetup(command):
     command.addProcessor("Setup processor")
@@ -122,6 +138,20 @@ def offerPrintout(command):
     elif command.getId() == (eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_STOP) and command.is_lift:
         command.handle("Finished initialisation")
         initState.setVal(consts.INIT_SUCCESS)
+
+def idleSetup():
+    # Set hint message before setup begins
+    if learn[0] is eventconsts.TYPE_TRANSPORT and learn[1] is eventconsts.CONTROL_STOP:
+        ui.setHintMsg("Navigate to \"View > Script output\" to set up your controller")
+
+def idleInit():
+    # Check for device ID timeout
+    if window.getAbsoluteTick() > consts.INIT_TIMEOUT:
+        print("Critical error!")
+        print("The linked device didn't respond to the universal device inquiry message within the timeout time.")
+        print("Sadly, your controller may be incompatible with this script as a result.")
+        
+        initState.setVal(consts.INIT_FAIL)
 
 from . import transport, jog, fader, drumpad
 

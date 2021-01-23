@@ -23,10 +23,10 @@ def OnMidiIn(event):
     
     command = internal.parse.ParsedEvent(event)
     
-    
-    
     if internal.initState == internal.consts.INIT_FAIL:
         return
+    elif internal.initState == internal.consts.INIT_INCOMPLETE:
+        internal.setup.processInitMessage(command)
     elif internal.initState == internal.consts.INIT_SETUP:
         internal.setup.processSetup(command)
     elif internal.initState == internal.consts.INIT_SUCCESS:
@@ -46,4 +46,10 @@ def OnMidiIn(event):
 
 def OnIdle():
     internal.window.update()
+    internal.window.incrementTicks()
+    
+    if internal.initState == internal.consts.INIT_SETUP:
+        internal.setup.idleSetup()
+    elif internal.initState == internal.consts.INIT_INCOMPLETE:
+        internal.setup.idleInit()
 

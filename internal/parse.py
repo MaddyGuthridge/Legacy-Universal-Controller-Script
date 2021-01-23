@@ -214,8 +214,10 @@ class EventDetector:
         print("In order to make your controller initialise automatically,")
         print("copy the above block of text into a blank text file.")
         print("Save the file in the script's directory in the following location:\n")
-        print("Folder: deviceconfig > " + helpers.getModuleName(device.getName()))
-        print("File: autoinit.py")
+        print("Folder: deviceconfig")
+        print("File: autoinit.py\n")
+        print("For more advanced options, for example, to allow for multi-device support, ", end="")
+        print("check the wiki page at " + consts.HELP_URL_AUTOINIT)
         return ""
         
 detector = EventDetector()
@@ -232,6 +234,16 @@ class ParsedEvent:
         self.ignored = False
         self.edited = False
         
+        self.actions = processorhelpers.ActionPrinter()
+        
+        self.sysex = event.sysex
+        
+        # Identify sysex messages manually
+        if self.sysex is not None:
+            self.type = eventconsts.TYPE_SYSEX
+            self.control = ""
+            return
+        
         self.is_lift = not self.value
         
         self.refreshId()
@@ -241,7 +253,7 @@ class ParsedEvent:
         else:
             self.is_double_click = processorhelpers.isDoubleClickLift(self.getId())
         
-        self.actions = processorhelpers.ActionPrinter()
+        
 
     def __str__(self):
         
