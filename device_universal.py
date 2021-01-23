@@ -46,4 +46,7 @@ def OnMidiIn(event):
 
 def OnIdle():
     internal.window.update()
+    
+    if internal.initState == internal.consts.INIT_SETUP:
+        internal.setup.idleSetup()
 

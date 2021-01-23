@@ -6,6 +6,8 @@ This script helps with initialising the script, and setting up the event detecto
 Author: Miguel Guthridge
 """
 
+import ui
+
 from .. import consts
 
 import helpers
@@ -130,6 +132,11 @@ def offerPrintout(command):
     elif command.getId() == (eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_STOP) and command.is_lift:
         command.handle("Finished initialisation")
         initState.setVal(consts.INIT_SUCCESS)
+
+def idleSetup():
+    # Set hint message before setup begins
+    if learn[0] is eventconsts.TYPE_TRANSPORT and learn[1] is eventconsts.CONTROL_STOP:
+        ui.setHintMsg("Navigate to \"View > Script output\" to set up your controller")
 
 from . import transport, jog, fader, drumpad
 
