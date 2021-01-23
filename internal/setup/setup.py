@@ -83,7 +83,6 @@ def processInitMessage(command):
     
     if result == 0:
         print("An autoinit file could not be found for your device")
-        print("Beginning manual setup")
         initState.setVal(consts.INIT_SETUP)
     
     elif result == -1:
@@ -97,8 +96,12 @@ def processInitMessage(command):
             print("Device properties loaded from global configuration")
         initState.setVal(consts.INIT_SUCCESS)
     
+    print(helpers.getLineBreak())
+    print("")
+    
     if initState == consts.INIT_SETUP:
-        learn.setCurrent(eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_STOP, "Press the stop button")
+        learn.setCurrent(eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_STOP, 
+                         "To begin manual setup, press the stop button on your controller")
 
 def processSetup(command):
     command.addProcessor("Setup processor")

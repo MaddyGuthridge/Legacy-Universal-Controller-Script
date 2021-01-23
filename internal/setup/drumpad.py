@@ -14,7 +14,9 @@ import eventconsts
 import helpers
 
 def setLearnFirstDrumPad():
-    learn.setCurrent(eventconsts.TYPE_DRUM_PAD, (x_coord, y_coord), "Press the (" + str(x_coord+1) + ", " + str(y_coord+1) + ") drum pad", can_skip=True)
+    learn.setCurrent(eventconsts.TYPE_DRUM_PAD, (x_coord, y_coord), 
+                     "Press the (" + str(x_coord+1) + ", " + str(y_coord+1) + ") drum pad. Coordinates are in the format (x, y)", 
+                     can_skip=True)
 
 x_coord = 0
 y_coord = 0
