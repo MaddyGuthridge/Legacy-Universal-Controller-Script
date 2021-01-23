@@ -22,6 +22,9 @@ SCRIPT_VERSION_SUFFIX = "Beta"
 
 MIN_FL_SCRIPT_VERSION = 7
 
+# Help URLs
+################################
+HELP_URL_AUTOINIT = "https://github.com/MiguelGuthridge/Universal-Controller-Script/wiki/Autoinit-Scripts"
 
 # Init states
 ################################

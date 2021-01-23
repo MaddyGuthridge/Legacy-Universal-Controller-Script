@@ -20,8 +20,8 @@ for x in IMPORT_LIST:
         imports.append(getattr(this, x))
         success_count += 1
     except Exception as e:
-        print("An error occured whilst importing device configuration: " + x)
-        print("Ensure that the device's __init__.py configuration has been set up correctly [copied from the template] and try again")
+        print("An error occured whilst importing device configuration: \"" + x + "\"")
+        print("Ensure that the folder's scripts have been set up correctly [copied from the template] and try again")
         print("Error message:", e)
 print("Successfully imported " + str(success_count) + " of " + str(len(IMPORT_LIST)) + " device configurations")
 

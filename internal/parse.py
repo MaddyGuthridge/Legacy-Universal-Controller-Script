@@ -214,8 +214,10 @@ class EventDetector:
         print("In order to make your controller initialise automatically,")
         print("copy the above block of text into a blank text file.")
         print("Save the file in the script's directory in the following location:\n")
-        print("Folder: deviceconfig > " + helpers.getModuleName(device.getName()))
-        print("File: autoinit.py")
+        print("Folder: deviceconfig")
+        print("File: autoinit.py\n")
+        print("For more advanced options, for example, to allow for multi-device support, ", end="")
+        print("check the wiki page at " + consts.HELP_URL_AUTOINIT)
         return ""
         
 detector = EventDetector()
