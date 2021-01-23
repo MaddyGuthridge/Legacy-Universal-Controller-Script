@@ -162,6 +162,13 @@ class WindowMgr:
         else:
             return getFlWindowString(self.active_fl_window)
 
+    def incrementTicks(self):
+        self.absolute_tick_number += 1
+        self.animation_tick_number += 1
+        self.idle_tick_number += 1
+    
+    def getAbsoluteTick(self):
+        return self.absolute_tick_number
     
     def revertPlugin(self):
         """Reverts to previous plugin

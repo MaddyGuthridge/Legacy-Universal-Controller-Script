@@ -9,6 +9,7 @@ Author: Miguel Guthridge
 import ui
 
 from .. import consts
+from ..windowstate import window
 
 import helpers
 import eventconsts
@@ -65,14 +66,14 @@ def initialise():
     print(helpers.getLineBreak())
     print("")
     
-    # Send universal device enquiry
-    device.midiOutSysex(consts.DEVICE_ENQUIRY_MESSAGE)
+    # Send universal device inquiry
+    device.midiOutSysex(consts.DEVICE_INQUIRY_MESSAGE)
     
 
 def processInitMessage(command):
     # Recieves a universal device query response
     
-    # If command isn't response to device enquiry
+    # If command isn't response to device inquiry
     if not command.type is eventconsts.TYPE_SYSEX:
         return
     
@@ -142,6 +143,15 @@ def idleSetup():
     # Set hint message before setup begins
     if learn[0] is eventconsts.TYPE_TRANSPORT and learn[1] is eventconsts.CONTROL_STOP:
         ui.setHintMsg("Navigate to \"View > Script output\" to set up your controller")
+
+def idleInit():
+    # Check for device ID timeout
+    if window.getAbsoluteTick() > consts.INIT_TIMEOUT:
+        print("Critical error!")
+        print("The linked device didn't respond to the universal device inquiry message within the timeout time.")
+        print("Sadly, your controller may be incompatible with this script as a result.")
+        
+        initState.setVal(consts.INIT_FAIL)
 
 from . import transport, jog, fader, drumpad
 

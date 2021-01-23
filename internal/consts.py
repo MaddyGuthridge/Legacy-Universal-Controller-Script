@@ -34,10 +34,13 @@ INIT_SUCCESS = "Success"
 INIT_SETUP = "Setup"
 INIT_FAIL = "Fail"
 
+# Timeout for no device response
+INIT_TIMEOUT = 50
+
 # MIDI Messages
 ################################
 
-DEVICE_ENQUIRY_MESSAGE = bytes([0xF0, 0x7E, 0x7F, 0x06, 0x01, 0xF7])
+DEVICE_INQUIRY_MESSAGE = bytes([0xF0, 0x7E, 0x7F, 0x06, 0x01, 0xF7])
 
 # Window constants
 ################################

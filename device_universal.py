@@ -46,7 +46,10 @@ def OnMidiIn(event):
 
 def OnIdle():
     internal.window.update()
+    internal.window.incrementTicks()
     
     if internal.initState == internal.consts.INIT_SETUP:
         internal.setup.idleSetup()
+    elif internal.initState == internal.consts.INIT_INCOMPLETE:
+        internal.setup.idleInit()
 
