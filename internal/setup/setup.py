@@ -74,12 +74,16 @@ def processInitMessage(command):
     # Recieves a universal device query response
     
     # If command isn't response to device inquiry
-    if not command.type is eventconsts.TYPE_SYSEX:
-        return
     
-    device_id = command.sysex[5 : -5].hex()
+    if type(command) is None:
+        device_id = None
+    else:
+        if not command.type is eventconsts.TYPE_SYSEX:
+            return
+        else:
+            device_id = command.sysex[5 : -5].hex()
     
-    print("Device ID: \"" + device_id + "\"")
+    print("Device ID: \"" + str(device_id) + "\"")
     
     # Import the configuration for the controller
     result = deviceconfig.loadSetup(device_id)
@@ -149,9 +153,9 @@ def idleInit():
     if window.getAbsoluteTick() > consts.INIT_TIMEOUT:
         print("Critical error!")
         print("The linked device didn't respond to the universal device inquiry message within the timeout time.")
-        print("Sadly, your controller may be incompatible with this script as a result.")
+        print("This device will load from the global device properties")
         
-        initState.setVal(consts.INIT_FAIL)
+        processInitMessage(None)
 
 from . import transport, jog, fader, drumpad
 

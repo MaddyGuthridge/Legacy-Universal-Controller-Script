@@ -39,15 +39,16 @@ def loadSetup(identifier_str):
        -1: error importing
     """
     
-    # Import from proper list
-    for i in imports:
-        if identifier_str in i.config.SUPPORTED_DEVICE_IDS:
-            try:
-                i.initialise()
-            except Exception as e:
-                print("Error while importing device properties:", e)
-                return -1
-            return 1
+    if type(identifier_str) is not None:
+        # Import from proper list
+        for i in imports:
+            if identifier_str in i.config.SUPPORTED_DEVICE_IDS:
+                try:
+                    i.initialise()
+                except Exception as e:
+                    print("Error while importing device properties:", e)
+                    return -1
+                return 1
     
     # Import from default configuration
     try:
