@@ -108,8 +108,8 @@ def processInitMessage(command):
     print("")
     
     if initState == consts.INIT_SETUP:
-        learn.setCurrent(eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_STOP, 
-                         "To begin manual setup, press the stop button on your controller")
+        learn.setCurrent(eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_PLAY, 
+                         "To begin manual setup, press the play button on your controller")
     
 
 def processSetup(command):

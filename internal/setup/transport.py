@@ -38,8 +38,8 @@ def setupTransport(command):
 def setupStop(command):
     detector.addEvent(command.status, command.note, command.value, eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_STOP)
     command.handle("Register stop button")
+    learn.setCurrent(eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_LOOP, "Press the loop button", True)
     
-    learn.setCurrent(eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_PLAY, "Press the play button")
     # Reset startup hint message
     ui.setHintMsg("")
 
@@ -47,7 +47,7 @@ def setupPlay(command):
     if command.type == eventconsts.TYPE_UNKNOWN:
         command.handle("Register play button")
         detector.addEvent(command.status, command.note, command.value, eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_PLAY)
-        learn.setCurrent(eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_LOOP, "Press the loop button", True)
+        learn.setCurrent(eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_STOP, "Press the stop button")
 
 def setupLoop(command):
     if command.type == eventconsts.TYPE_UNKNOWN:
