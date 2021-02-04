@@ -15,7 +15,7 @@ import helpers
 
 def setLearnFirstDrumPad():
     learn.setCurrent(eventconsts.TYPE_DRUM_PAD, (x_coord, y_coord), 
-                     "Press the (" + str(x_coord+1) + ", " + str(y_coord+1) + ") drum pad. Coordinates are in the format (x, y)", 
+                     "Press the top left (" + str(x_coord+1) + ", " + str(y_coord+1) + ") drum pad. Drum pads should be entered from left to right, then top to bottom.", 
                      can_skip=True)
 
 x_coord = 0

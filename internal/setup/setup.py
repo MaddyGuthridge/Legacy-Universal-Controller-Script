@@ -75,7 +75,7 @@ def processInitMessage(command):
     
     # If command isn't response to device inquiry
     
-    if type(command) is None:
+    if command is None:
         device_id = None
     else:
         if not command.type is eventconsts.TYPE_SYSEX:
@@ -84,6 +84,7 @@ def processInitMessage(command):
             device_id = command.sysex[5 : -5].hex()
     
     print("Device ID: \"" + str(device_id) + "\"")
+    
     
     # Import the configuration for the controller
     result = deviceconfig.loadSetup(device_id)
@@ -109,6 +110,7 @@ def processInitMessage(command):
     if initState == consts.INIT_SETUP:
         learn.setCurrent(eventconsts.TYPE_TRANSPORT, eventconsts.CONTROL_STOP, 
                          "To begin manual setup, press the stop button on your controller")
+    
 
 def processSetup(command):
     command.addProcessor("Setup processor")
@@ -151,7 +153,7 @@ def idleSetup():
 def idleInit():
     # Check for device ID timeout
     if window.getAbsoluteTick() > consts.INIT_TIMEOUT:
-        print("Critical error!")
+        print("Note:")
         print("The linked device didn't respond to the universal device inquiry message within the timeout time.")
         print("This device will load from the global device properties")
         
