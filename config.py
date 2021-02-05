@@ -15,7 +15,9 @@ from internal.consts import DEBUG
 CHECK_UPDATES = True
 # THIS DOESN'T WORK YET :(
 
-
+# Controls whether to default to the global device configuration. 
+# Enable this if your device doesn't play nicely with multi-device support
+USE_GLOBAL_DEVICE_CONFIG = False
 
 LONG_PRESS_TIME = 0.5 # Change how long a long press needs to be held for
 DOUBLE_PRESS_TIME = 0.2 # Change how quickly a double press needs to be done to be detected

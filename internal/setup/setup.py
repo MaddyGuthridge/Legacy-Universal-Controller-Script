@@ -14,6 +14,7 @@ from ..windowstate import window
 import helpers
 import eventconsts
 import deviceconfig
+import config
 
 import device
 
@@ -66,6 +67,11 @@ def initialise():
     print(helpers.getLineBreak())
     print("")
     
+    # Check for USE_GLOBAL_DEVICE_CONFIG flag
+    if config.USE_GLOBAL_DEVICE_CONFIG:
+        processInitMessage(None)
+        return
+    
     # Send universal device inquiry
     device.midiOutSysex(consts.DEVICE_INQUIRY_MESSAGE)
     
@@ -83,7 +89,14 @@ def processInitMessage(command):
         else:
             device_id = command.sysex[5 : -5].hex()
     
-    print("Device ID: \"" + str(device_id) + "\"")
+    if device_id is None:
+        if config.USE_GLOBAL_DEVICE_CONFIG:
+            print("Device ID: [Not Requested]")
+        else:
+            print("Device ID: [No Response]")
+    else:
+        print("Device ID: \"" + str(device_id) + "\"")
+        
     
     
     # Import the configuration for the controller
@@ -151,6 +164,7 @@ def idleSetup():
         ui.setHintMsg("Navigate to \"View > Script output\" to set up your controller")
 
 def idleInit():
+    
     # Check for device ID timeout
     if window.getAbsoluteTick() > consts.INIT_TIMEOUT:
         print("Note:")
