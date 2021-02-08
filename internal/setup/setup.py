@@ -164,15 +164,6 @@ def idleSetup():
         ui.setHintMsg("Navigate to \"View > Script output\" to set up your controller")
 
 def idleInit():
-    
-    # FIXME: For debugging only. Remove before release
-    import time
-    curr_time = time.localtime()
-    print("IDLE: Tick number =", window.absolute_tick_number)
-    print("TIMEOUT REQUIRED  =", consts.INIT_TIMEOUT)
-    print("CURRENT TIME      =", curr_time.tm_hour, curr_time.tm_min, curr_time.tm_sec)
-    print("")
-    
     # Check for device ID timeout
     if window.getAbsoluteTick() > consts.INIT_TIMEOUT:
         print("Note:")

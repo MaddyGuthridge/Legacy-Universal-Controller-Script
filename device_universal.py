@@ -48,6 +48,16 @@ def OnIdle():
     internal.window.update()
     internal.window.incrementTicks()
     
+    # FIXME: For debugging only. Remove before release
+    if internal.window.absolute_tick_number < 100:
+        import time
+        curr_time = time.localtime()
+        print("IDLE: Tick number    =", internal.window.absolute_tick_number)
+        print("TIMEOUT REQUIRED     =", internal.consts.INIT_TIMEOUT)
+        print("CURRENT TIME         =", curr_time.tm_hour, curr_time.tm_min, curr_time.tm_sec)
+        print("INITIALISATION STATE =", internal.initState.state)
+        print("")
+    
     if internal.initState == internal.consts.INIT_SETUP:
         internal.setup.idleSetup()
     elif internal.initState == internal.consts.INIT_INCOMPLETE:
