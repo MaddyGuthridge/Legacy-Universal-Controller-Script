@@ -5,6 +5,9 @@ Contains class definition for a generic control surface
 Author: Miguel Guthridge
 """
 
+from .controlmapping import ControlMapping
+from .controlvalue import ControlValue
+
 class ControlSurface:
     """Object representing a generic control surface
     """
@@ -14,13 +17,13 @@ class ControlSurface:
         Args:
             control_map (ControlMapping): mapping for control within device
         """
-        self.mapping = control_map
+        self._mapping = control_map
         # MIDI Value of the control
-        self.value = 0
+        self._value = 0
         # Hex colour of the control
-        self.colour = 0xFFFFFF
+        self._colour = 0xFFFFFF
         # Description string for the control
-        self.description = ""
+        self._description = ""
 
     def recognise(self, event) -> ControlValue:
         """If the event is recognised as mapping to this control surface,
@@ -41,4 +44,12 @@ class ControlSurface:
         Args:
             new_val (ControlValue): New value for the control
         """
-        self.value = new_val.value
+        self._value = new_val.getValue()
+
+    def getValue(self) -> ControlValue:
+        """Get the current value of the control
+
+        Returns:
+            ControlValue: current value
+        """
+        return ControlValue(self._mapping, self._value)
