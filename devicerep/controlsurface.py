@@ -41,7 +41,7 @@ class ControlSurface:
     def recognise(self, event) -> 'ControlValue':
         """If the event is recognised as mapping to this control surface,
         returns a control value representing the internal value, and how it
-        maps to this control
+        maps to this control. Otherwise returns None
 
         Args:
             event (FlEvent): event to recognise

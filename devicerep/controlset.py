@@ -5,7 +5,7 @@ Contains class definition for set of controls.
 Author: Miguel Guthridge
 """
 
-from . import ControlSurface, ControlMapping
+from . import ControlSurface, ControlMapping, ControlValue
 
 class ControlSet:
     """Set of grouped controls
@@ -15,7 +15,7 @@ class ControlSet:
         self._controls = []
         self._name = name
     
-    def addControl(self, set: int, control: ControlSurface):
+    def addControl(self, set: int, control: ControlSurface) -> None:
         """Add a control to the control set and return its mapping
 
         Args:
@@ -26,3 +26,15 @@ class ControlSet:
         control.setMapping(mapping)
         self._controls.append(control)
         return mapping
+
+    def recognise(self, event) -> 'ControlValue':
+        """Recognise an event and return its ControlValue. If no matches are
+        found, None is returned.
+        
+        Args:
+            event (FlEvent): event to check
+        """
+        for control in self._controls:
+            res = control.recognise(event)
+            if res is not None:
+                return res

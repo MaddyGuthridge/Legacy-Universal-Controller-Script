@@ -9,8 +9,8 @@ the management of device controls can be abstracted away, and can be
 improved upon without breaking derived device implementations
 """
 
-from .controlsurface import ControlSurface
-from .controlmapping import ControlMapping
+from . import ControlMapping, ControlSurface, ControlValue
+from exceptions import MidiRecogniseException
 
 class DeviceState:
     """Represents the current state of a controller
@@ -43,3 +43,23 @@ class DeviceState:
             ControlMapping: mapping where the control was inserted
         """
         return self._control_sets[set].addControl(control)
+
+    def recognise(self, event) -> ControlValue:
+        """Recognise an event and return its ControlValue mapping
+
+        Args:
+            event (FlEvent): Event to recognise
+
+        Returns:
+            ControlValue: Mapping
+        
+        Raises:
+            MidiRecogniseException: Event not recognised
+        """
+        for set in self._control_sets:
+            res = set.recognise(event)
+            if res is not None:
+                return res
+        
+        # No matches: raise exception
+        raise MidiRecogniseException("Event not recognised")
