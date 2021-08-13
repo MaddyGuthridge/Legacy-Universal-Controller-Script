@@ -10,16 +10,13 @@ from . import ControlMapping, ControlValue
 class ControlSurface:
     """Object representing a generic control surface
     """
-    def __init__(self):
+    def __init__(self) -> None:
         """Create a ControlSurface instance
         """
         self._mapping = None
-        # Value of the control
-        self._value = 0
-        # Hex colour of the control: 0xRRGGBB
-        self._colour = 0x000000
-        # Description string for the control
-        self._description = ""
+        
+        # Set all values to default
+        self.resetControl()
 
     def setMapping(self, mapping: 'ControlMapping') -> None:
         """Set the mapping of the control
@@ -46,7 +43,19 @@ class ControlSurface:
         Returns:
             ControlValue: whether event was a match
         """
-        return NotImplemented
+        # TODO: Set up a basic event detection system
+        raise NotImplementedError("Method must be overridden")
+
+    def resetControl(self) -> None:
+        """Reset the state of the control to its default value, including the
+        value, colour, and description.
+        
+        Calls the setProperty() methods, so that any required MIDI events are
+        sent to the controller to reset values there.
+        """
+        self.setVal(0)
+        self.setColour(0x000000)
+        self.setDescription("")
 
     def setVal(self, new_val: 'ControlValue') -> None:
         """Set the value of this control to that of the event
@@ -70,3 +79,41 @@ class ControlSurface:
         if self._mapping is None:
             raise Exception("Control was never mapped")
         return ControlValue(self._mapping, self._value)
+
+    def setColour(self, colour: int) -> None:
+        """Set a new colour for the control
+
+        NOTE: As with setValue(), this should be extended to send the required
+        MIDI events if the device supports it.
+
+        Args:
+            colour (int): Hex colour 0xRRGGBB
+        """
+        self._colour = colour
+    
+    def getColour(self) -> int:
+        """Get the current colour of the control
+
+        Returns:
+            int: Hex colour 0xRRGGBB
+        """
+        return self._colour
+    
+    def setDescription(self, desc: str) -> None:
+        """Set a new description for the control
+
+        NOTE: As with setValue(), this should be extended to send the required
+        MIDI events if the device supports it.
+
+        Args:
+            desc (str): new description
+        """
+        self._description = desc
+    
+    def getDescription(self) -> str:
+        """Get the current description of the control
+
+        Returns:
+            str: Description
+        """
+        return self._description
