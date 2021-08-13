@@ -6,3 +6,4 @@ Author: Miguel Guthridge
 """
 
 from .midirecognise import MidiRecogniseException
+from .midiout import MidiOutException
