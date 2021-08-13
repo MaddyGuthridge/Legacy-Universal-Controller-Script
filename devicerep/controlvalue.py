@@ -8,6 +8,8 @@ correct integration with plugins.
 Author: Miguel Guthridge
 """
 
+from . import ControlMapping
+
 class ControlValue:
     """Value mapped to a control
     """

@@ -12,15 +12,12 @@ class ControlSurface:
     """
     def __init__(self):
         """Create a ControlSurface instance
-
-        Args:
-            control_map (ControlMapping): mapping for control within device
         """
         self._mapping = None
-        # MIDI Value of the control
+        # Value of the control
         self._value = 0
-        # Hex colour of the control
-        self._colour = 0xFFFFFF
+        # Hex colour of the control: 0xRRGGBB
+        self._colour = 0x000000
         # Description string for the control
         self._description = ""
 
@@ -53,6 +50,11 @@ class ControlSurface:
 
     def setVal(self, new_val: 'ControlValue') -> None:
         """Set the value of this control to that of the event
+        
+        NOTE: This should be extended by device-specific implementations to send
+        a MIDI message if the device can set values for a type.
+        If the control surface requires specific value types (eg direction for a
+        click wheel or d-pad), the type of `new_val` should be overridden too.
 
         Args:
             new_val (ControlValue): New value for the control
@@ -63,7 +65,7 @@ class ControlSurface:
         """Get the current value of the control
 
         Returns:
-            ControlValue: current value
+            ControlValue: current value associated with control
         """
         if self._mapping is None:
             raise Exception("Control was never mapped")
