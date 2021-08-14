@@ -74,3 +74,10 @@ class DeviceState:
         
         # No matches: raise exception
         raise MidiRecogniseException("Event not recognised")
+
+    def resetControls(self) -> None:
+        """Send a reset command to each ControlSurface associated with the
+        device
+        """
+        for set in self._control_sets:
+            set.resetControls()

@@ -55,4 +55,9 @@ class ControlSet:
             ControlSurface: associated ControlSurface
         """
         return self._controls[mapping.getControlIndex()]
-    
+
+    def resetControls(self) -> None:
+        """Send a reset command to each ControlSurface
+        """
+        for control in self._controls:
+            control.resetControl()

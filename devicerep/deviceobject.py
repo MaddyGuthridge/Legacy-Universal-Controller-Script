@@ -35,3 +35,8 @@ class DeviceObject:
             MidiRecogniseException: Event not recognised
         """
         return self._state.recognise(event)
+
+    def resetControls(self) -> None:
+        """Reset all controls to their default state
+        """
+        self._state.resetControls()
