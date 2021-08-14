@@ -5,6 +5,8 @@ Contains class definition for a mapping to a device's control
 Author: Miguel Guthridge
 """
 
+from . import ControlSurface
+
 class ControlMapping:
     """Mapping to a control in a device
     """
