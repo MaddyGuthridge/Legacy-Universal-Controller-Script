@@ -60,3 +60,12 @@ class DeviceObject:
         parameters that appear linked.
         """
         self._state.resetControls()
+    
+    def onUpdate(self) -> None:
+        """Called during `onIdle()`. This function is used to trigger
+        communication with the MIDI device, usually to set colours for
+        LED-equipped `ControlSurface`s, labels for controls with a text label,
+        or values for controls that can be automatically moved as the linked
+        value changes.
+        """
+        self._state.onUpdate()

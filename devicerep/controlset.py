@@ -61,3 +61,9 @@ class ControlSet:
         """
         for control in self._controls:
             control.resetControl()
+
+    def onUpdate(self) -> None:
+        """Call `onUpdate()` for each `ControlSurface`
+        """
+        for control in self._controls:
+            control.onUpdate()

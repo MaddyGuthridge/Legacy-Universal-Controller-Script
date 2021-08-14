@@ -27,6 +27,12 @@ class ControlSurface:
         
         # Set all values to default
         self.resetControl()
+        # Also set up previous values
+        # Can't do this by calling onUpdate() as we will get a linked device not
+        # assigned error.
+        self._prev_value = self._value
+        self._prev_colour = self._colour
+        self._prev_description = self._description
 
     def setMapping(self, mapping: 'ControlMapping') -> None:
         """Set the mapping of the control
@@ -122,3 +128,21 @@ class ControlSurface:
             str: Description
         """
         return self._description
+
+    def onUpdate(self) -> None:
+        """Called during `onIdle()`. This function serves to allow device
+        communication for communicating updated device properties to the device.
+        For example, a `ControlSurface` that supported an RGB value could send
+        that RGB value to the controller in this function.
+        
+        NOTE: Where possible, the number of MIDI messages being sent should be
+        minimised by only sending events if the value has updated.
+        This generic function contains only updates previous values. All MIDI
+        messages should be handled by derived classes.
+        When extending the `ControlSurface` class, make sure to call
+        `super().onUpdate()` at the end of your `onUpdate()` function so as to
+        ensure that previous values are maintained correctly.
+        """
+        self._prev_value = self._value
+        self._prev_colour = self._colour
+        self._prev_description = self._description

@@ -92,3 +92,9 @@ class DeviceState:
         """
         for set in self._control_sets:
             set.resetControls()
+
+    def onUpdate(self) -> None:
+        """Run `onUpdate()` for each `ControlSurface`
+        """
+        for set in self._control_sets:
+            set.onUpdate()
