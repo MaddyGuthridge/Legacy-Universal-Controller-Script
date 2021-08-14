@@ -11,18 +11,24 @@ class ControlSet:
     """Set of grouped controls
     """
     
-    def __init__(self, name: str) -> None:
+    def __init__(self, name: str, set_index: int) -> None:
+        """Create a ControlSet instance
+
+        Args:
+            name (str): name of the control set
+            set_index (int): index of the control set within the device
+        """
         self._controls = []
         self._name = name
+        self._index = set_index
     
-    def addControl(self, set: int, control: ControlSurface) -> None:
+    def addControl(self, control: ControlSurface) -> None:
         """Add a control to the control set and return its mapping
 
         Args:
-            set (int): the ID of this set (for generating mapping)
             control (ControlSurface): control object
         """
-        mapping = ControlMapping(set, len(self._controls))
+        mapping = ControlMapping(self._index, len(self._controls))
         control.setMapping(mapping)
         self._controls.append(control)
         return mapping
