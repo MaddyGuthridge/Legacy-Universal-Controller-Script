@@ -55,6 +55,17 @@ class DeviceState:
         """
         return self._control_sets[set].addControl(control)
 
+    def getControl(self, mapping: ControlMapping) -> ControlSurface:
+        """Return a reference to a ControlSurface
+
+        Args:
+            mapping (ControlMapping): mapping of control
+
+        Returns:
+            ControlSurface: control associated with mapping
+        """
+        return self._control_sets[mapping.getControlSet()].getControl(mapping)
+
     def recognise(self, event) -> ControlValue:
         """Recognise an event and return its ControlValue mapping
 

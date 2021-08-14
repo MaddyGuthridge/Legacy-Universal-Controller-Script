@@ -5,7 +5,7 @@ Contains the definition for a generic DeviceObject
 Author: Miguel Guthridge
 """
 
-from . import DeviceState, ControlValue
+from . import DeviceState, ControlValue, ControlMapping, ControlSurface
 
 class DeviceObject:
     """An object representing a generic device and its state
@@ -13,6 +13,10 @@ class DeviceObject:
     Each device should inherit from this class, filling its state object with 
     custom ControlSurfaces in order to build a complete representation of the
     device.
+    
+    NOTE: It is recommended to call the super().myFunction() for every
+    overridden function so that common functionality can be updated without
+    breaking individual device modules, and to reduce duplicate code.
     """
     def __init__(self) -> None:
         """Create an instance of the device
@@ -21,6 +25,17 @@ class DeviceObject:
         and then add event instances to recognise.
         """
         self._state = DeviceState()
+ 
+    def getControl(self, mapping: ControlMapping) -> ControlSurface:
+        """Return a reference to the ControlSurface linked to a mapping
+
+        Args:
+            mapping (ControlMapping): mapping to control
+
+        Returns:
+            ControlSurface: associated ControlSurface
+        """
+        return self._state.getControl(mapping)
  
     def recognise(self, event) -> ControlValue:
         """Recognise an event and return its ControlValue mapping

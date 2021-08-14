@@ -33,6 +33,17 @@ class ControlSet:
         self._controls.append(control)
         return mapping
 
+    def getControl(self, mapping: ControlMapping) -> ControlSurface:
+        """Return a reference to the ControlSurface linked to a mapping
+
+        Args:
+            mapping (ControlMapping): mapping to control
+
+        Returns:
+            ControlSurface: associated ControlSurface
+        """
+        return self._controls[mapping.getControlIndex()]
+    
     def recognise(self, event) -> 'ControlValue':
         """Recognise an event and return its ControlValue. If no matches are
         found, None is returned.
@@ -44,17 +55,6 @@ class ControlSet:
             res = control.recognise(event)
             if res is not None:
                 return res
-
-    def getControl(self, mapping: ControlMapping) -> ControlSurface:
-        """Return a reference to the ControlSurface linked to a mapping
-
-        Args:
-            mapping (ControlMapping): mapping to control
-
-        Returns:
-            ControlSurface: associated ControlSurface
-        """
-        return self._controls[mapping.getControlIndex()]
 
     def resetControls(self) -> None:
         """Send a reset command to each ControlSurface
