@@ -12,7 +12,7 @@ class ControlSet:
     """
     
     def __init__(self, name: str, set_index: int) -> None:
-        """Create a ControlSet instance
+        """Create a `ControlSet` instance
 
         Args:
             name (str): name of the control set
@@ -23,7 +23,7 @@ class ControlSet:
         self._index = set_index
     
     def addControl(self, control: ControlSurface) -> None:
-        """Add a control to the control set and return its mapping
+        """Add a control to the `ControlSet` and return its mapping
 
         Args:
             control (ControlSurface): control object
@@ -34,7 +34,7 @@ class ControlSet:
         return mapping
 
     def getControl(self, mapping: ControlMapping) -> ControlSurface:
-        """Return a reference to the ControlSurface linked to a mapping
+        """Return a reference to the `ControlSurface` linked to a mapping
 
         Args:
             mapping (ControlMapping): mapping to control
@@ -45,8 +45,8 @@ class ControlSet:
         return self._controls[mapping.getControlIndex()]
     
     def recognise(self, event) -> 'ControlValue':
-        """Recognise an event and return its ControlValue. If no matches are
-        found, None is returned.
+        """Recognise an event and return its `ControlValue`. If no matches are
+        found, `None` is returned.
         
         Args:
             event (FlEvent): event to check
@@ -57,7 +57,7 @@ class ControlSet:
                 return res
 
     def resetControls(self) -> None:
-        """Send a reset command to each ControlSurface
+        """Send a reset command to each `ControlSurface`
         """
         for control in self._controls:
             control.resetControl()

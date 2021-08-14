@@ -8,10 +8,20 @@ Author: Miguel Guthridge
 from . import ControlMapping, ControlValue
 
 class ControlSurface:
-    """Object representing a generic control surface
+    """Abstract object representing a generic control surface.
+    
+    NOTE: Where possible, objects should be derived from `ControlSurface`s that
+    most closely match their type. For example, a custom knob specific to a
+    controller would be better off extending CLASSNAME rather than
+    `ControlSurface`.
+    TODO: CLASSNAME
     """
     def __init__(self) -> None:
-        """Create a ControlSurface instance
+        """Create a generic `ControlSurface` instance.
+        
+        WARNING: Ensure that you are creating an instance of a derived control,
+        rather than a generic ControlSurface, so that the specifics in
+        functionality can be replicated.
         """
         self._mapping = None
         
@@ -21,7 +31,7 @@ class ControlSurface:
     def setMapping(self, mapping: 'ControlMapping') -> None:
         """Set the mapping of the control
         
-        WARNING: This should only be called by the DeviceState object when
+        WARNING: This should only be called by the `DeviceState` object when
         adding the control to a device
 
         Args:
@@ -33,9 +43,9 @@ class ControlSurface:
             raise Exception("Mapping already set")
 
     def recognise(self, event) -> 'ControlValue':
-        """If the event is recognised as mapping to this control surface,
+        """If the event is recognised as mapping to this `ControlSurface`,
         returns a control value representing the internal value, and how it
-        maps to this control. Otherwise returns None
+        maps to this control. Otherwise returns `None`
 
         Args:
             event (FlEvent): event to recognise
@@ -58,15 +68,10 @@ class ControlSurface:
         self.setDescription("")
 
     def setVal(self, new_val: 'ControlValue') -> None:
-        """Set the value of this control to that of the event
-        
-        NOTE: This should be extended by device-specific implementations to send
-        a MIDI message if the device can set values for a type.
-        If the control surface requires specific value types (eg direction for a
-        click wheel or d-pad), the type of `new_val` should be overridden too.
+        """Set the value of this control to that of the event.
 
         Args:
-            new_val (ControlValue): New value for the control
+            new_val (ControlValue): New value for the control.
         """
         self._value = new_val.getValue()
 
