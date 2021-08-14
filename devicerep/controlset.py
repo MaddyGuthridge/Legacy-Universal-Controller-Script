@@ -38,3 +38,15 @@ class ControlSet:
             res = control.recognise(event)
             if res is not None:
                 return res
+
+    def getControl(self, mapping: ControlMapping) -> ControlSurface:
+        """Return a reference to the ControlSurface linked to a mapping
+
+        Args:
+            mapping (ControlMapping): mapping to control
+
+        Returns:
+            ControlSurface: associated ControlSurface
+        """
+        return self._controls[mapping.getControlIndex()]
+    

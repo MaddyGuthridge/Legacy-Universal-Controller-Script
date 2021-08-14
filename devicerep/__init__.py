@@ -9,3 +9,5 @@ Author: Miguel Guthridge
 from .controlsurface import ControlSurface
 from .controlmapping import ControlMapping
 from .controlvalue import ControlValue
+from .devicestate import DeviceState
+from .controlset import ControlSet
