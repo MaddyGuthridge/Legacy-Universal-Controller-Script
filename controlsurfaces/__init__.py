@@ -10,3 +10,4 @@ from .controlsurface import ControlSurface
 from .note import Note, NoteOn, NoteOff
 
 from .knob import Knob
+from .fader import Fader
