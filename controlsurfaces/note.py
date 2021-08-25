@@ -1,6 +1,6 @@
-"""noteon.py
+"""note.py
 
-Note On Event
+Note Events
 
 Author: Miguel Guthridge
 """
