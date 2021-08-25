@@ -6,8 +6,9 @@ control sets, which themselves contain controls.
 Author: Miguel Guthridge
 """
 
-from . import ControlMapping, ControlSurface, ControlValue, ControlSet
+from . import ControlMapping, ControlValue, ControlSet
 from exceptions import MidiRecogniseException
+from controlsurfaces import ControlSurface
 
 class DeviceState:
     """Represents the current state of a controller.

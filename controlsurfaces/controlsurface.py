@@ -5,7 +5,7 @@ Contains class definition for a generic control surface
 Author: Miguel Guthridge
 """
 
-from . import ControlMapping, ControlValue
+from devicerep import ControlMapping, ControlValue
 
 class ControlSurface:
     """Abstract object representing a generic control surface.

@@ -5,7 +5,8 @@ Contains the definition for a generic DeviceObject
 Author: Miguel Guthridge
 """
 
-from . import DeviceState, ControlValue, ControlMapping, ControlSurface
+from . import DeviceState, ControlValue, ControlMapping
+from controlsurfaces import ControlSurface
 
 class DeviceObject:
     """An object representing a generic device and its state.

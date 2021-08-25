@@ -5,7 +5,8 @@ Contains class definition for set of controls.
 Author: Miguel Guthridge
 """
 
-from . import ControlSurface, ControlMapping, ControlValue
+from . import ControlMapping, ControlValue
+from controlsurfaces import ControlSurface
 
 class ControlSet:
     """Set of grouped controls

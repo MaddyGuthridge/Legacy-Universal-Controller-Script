@@ -5,7 +5,8 @@ Note Events
 Author: Miguel Guthridge
 """
 
-from devicerep import ControlSurface, ControlValue
+from devicerep import ControlValue
+from . import ControlSurface
 
 class Note(ControlSurface):
     """Generic note control
