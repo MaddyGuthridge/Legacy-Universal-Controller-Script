@@ -12,9 +12,8 @@ class ControlSurface:
     
     NOTE: Where possible, objects should be derived from `ControlSurface`s that
     most closely match their type. For example, a custom knob specific to a
-    controller would be better off extending CLASSNAME rather than
+    controller would be better off extending controlsurfaces.Knob rather than
     `ControlSurface`.
-    TODO: CLASSNAME
     """
     def __init__(self) -> None:
         """Create a generic `ControlSurface` instance.
@@ -59,7 +58,6 @@ class ControlSurface:
         Returns:
             ControlValue: whether event was a match
         """
-        # TODO: Set up a basic event detection system
         raise NotImplementedError("Method must be overridden")
 
     def resetControl(self) -> None:
