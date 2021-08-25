@@ -11,3 +11,4 @@ from .note import Note, NoteOn, NoteOff
 
 from .knob import Knob
 from .fader import Fader
+from .button import Button
