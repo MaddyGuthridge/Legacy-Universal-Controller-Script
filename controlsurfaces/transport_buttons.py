@@ -38,3 +38,15 @@ class LoopButton(TransportButton):
 class RecordButton(TransportButton):
     """Record button
     """
+
+class TrackButton(TransportButton):
+    """Generic track navigation button
+    """
+
+class NextTrackButton(TrackButton):
+    """Next track
+    """
+
+class PrevTrackButton(TrackButton):
+    """Previous track
+    """
