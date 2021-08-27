@@ -11,3 +11,4 @@ from .controlmapping import ControlMapping
 from .controlvalue import ControlValue
 from .devicestate import DeviceState
 from .controlset import ControlSet
+from .deviceobject import DeviceObject
