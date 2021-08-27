@@ -11,6 +11,10 @@ class TransportButton(Button):
     """Generic transport button
     """
 
+class MenuButton(TransportButton):
+    """Button used to active the script's menu
+    """
+
 class PlayPauseButton(TransportButton):
     """Play/Pause control button
     """
