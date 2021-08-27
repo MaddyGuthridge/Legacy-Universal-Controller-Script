@@ -43,8 +43,6 @@ class DeviceObject:
         """
         self._state = DeviceState()
         
-        self._set_mappings = dict()
-        
     def getControlSetTargeting(self, target: str) -> ControlSet:
         """Return the ControlSet that maps to a certain FL Studio target
 
