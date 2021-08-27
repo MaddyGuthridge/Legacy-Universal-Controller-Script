@@ -29,6 +29,8 @@ class DeviceState:
         * `addControl(set: int, control: ControlSurface)`
         """
         self._control_sets = []
+        
+        self._set_targets = dict()
     
     def addControlSet(self, name: str) -> int:
         """Add a `ControlSet` to the device. This is used to group controls into
@@ -61,6 +63,29 @@ class DeviceState:
         self._control_sets.append(control_set)
         return index
     
+    def getControlSet(self, index: int) -> ControlSet:
+        """Return the control set at index
+
+        Args:
+            index (int): index of control set
+
+        Returns:
+            ControlSet: control set at index
+        """
+        return self._control_sets[index]
+    
+    def getControlSetTargeting(self, target: str) -> ControlSet:
+        """Returns the ControlSet mapped to target
+
+        Args:
+            target (str): target for mapping a control to parameters in
+                          FL Studio
+
+        Returns:
+            ControlSet: pointed at target
+        """
+        return self._control_sets[self._set_targets[target]]
+    
     def addControl(self, set: int, control: ControlSurface) -> ControlMapping:
         """Adds a control to a `ControlSet`
 
@@ -83,6 +108,15 @@ class DeviceState:
             ControlSurface: control associated with mapping
         """
         return self._control_sets[mapping.getControlSet()].getControl(mapping)
+
+    def setControlTarget(self, index: int, target: str) -> None:
+        """Set a ControlSet at index to map to target
+
+        Args:
+            index (int): index of ControlSet
+            target (str): target in FL Studio
+        """
+        self._set_targets[target] = index
 
     def recognise(self, event) -> ControlValue:
         """Recognise an event and return its `ControlValue` mapping
