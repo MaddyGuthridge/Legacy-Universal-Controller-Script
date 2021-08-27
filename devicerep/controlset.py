@@ -9,7 +9,19 @@ from . import ControlMapping, ControlValue
 from controlsurfaces import ControlSurface
 
 class ControlSet:
-    """Set of grouped controls
+    """Represents a set of grouped controls.
+    
+    By default controls are added using the `addControl()` method, but this
+    class can potentially be extended by custom controller definitions to allow
+    for advanced mappings (for example making controls map differently when an
+    "alt" button is pressed), or more efficient control recognition.
+    
+    The implementation of potential subclasses is left up to the developer, but
+    they should ensure that all functions except for `addControl()` continue to
+    work.
+    
+    TODO: Split this into an abstract base class for inheritance and make this
+    class be an implementation such as BasicControlSet
     """
     
     def __init__(self, name: str, set_index: int) -> None:

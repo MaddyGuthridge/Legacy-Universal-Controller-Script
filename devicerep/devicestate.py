@@ -44,6 +44,23 @@ class DeviceState:
         self._control_sets.append(ControlSet(name, index))
         return index
     
+    def addCustomControlSet(self, control_set: ControlSet) -> int:
+        """Add a custom `ControlSet` to the device. This variant of
+        `addControlSet()` is used to add control set types that aren't the
+        standard `ControlSet` class. This allows more fine-grained control over
+        the behaviour of the device.
+
+        Args:
+            control_set (ControlSet): Control set to add
+
+        Returns:
+            int: Index of the control set
+        """
+        index = len(self._control_sets)
+        # TODO: Set index of control set
+        self._control_sets.append(control_set)
+        return index
+    
     def addControl(self, set: int, control: ControlSurface) -> ControlMapping:
         """Adds a control to a `ControlSet`
 
