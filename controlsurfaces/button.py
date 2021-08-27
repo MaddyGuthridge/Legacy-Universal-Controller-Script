@@ -1,6 +1,6 @@
 """button.py
 
-Button control type
+Button control type, and some derived controls
 
 Author: Miguel Guthridge
 """
@@ -21,4 +21,14 @@ class Button(StatusData1ControlSurface):
             ret._value = BUTTON_PRESS
         return ret
         
-    
+class FaderButton(Button):
+    """Generic button on fader (for mute and solo)
+    """
+
+class MuteButton(FaderButton):
+    """Mute button
+    """
+
+class SoloButton(FaderButton):
+    """Solo button
+    """
