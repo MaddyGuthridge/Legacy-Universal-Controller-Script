@@ -8,6 +8,8 @@ Author: Miguel Guthridge
 from . import ControlMapping, ControlValue
 from controlsurfaces import ControlSurface
 
+from exceptions import DeviceSetupException
+
 class ControlSet:
     """Represents a set of grouped controls.
     
@@ -18,7 +20,9 @@ class ControlSet:
     
     The implementation of potential subclasses is left up to the developer, but
     they should ensure that all functions except for `addControl()` continue to
-    work.
+    work. Note that as the positional index for the ControlSet isn't initially
+    known for derived classes, it should be explicitly set to `None`, so that it
+    will be updated when it is inserted.
     
     TODO: Split this into an abstract base class for inheritance and make this
     class be an implementation such as BasicControlSet
@@ -35,14 +39,36 @@ class ControlSet:
         self._name = name
         self._index = set_index
     
+    def setIndex(self, new_index: int) -> None:
+        """Sets the index of the control set if it is currently `None`
+        If it isn't `None`, an exception is raised.
+
+        Args:
+            new_index (int): Index to set
+        """
+        if self._index is None:
+            self._index = new_index
+            
+            # Set index for all controls too
+            for i, control in self._controls:
+                mapping = ControlMapping(self._index, i)
+                control.setMapping(mapping)
+        else:
+            raise DeviceSetupException("Attempted to set index of control set "
+                                       "when it was already set")
+    
     def addControl(self, control: ControlSurface) -> None:
         """Add a control to the `ControlSet` and return its mapping
 
         Args:
             control (ControlSurface): control object
         """
-        mapping = ControlMapping(self._index, len(self._controls))
-        control.setMapping(mapping)
+        # Only set mapping if the index of this control set is known
+        # Otherwise, it will be handled when the index for this ControlSet is
+        # set
+        if self._index is not None:
+            mapping = ControlMapping(self._index, len(self._controls))
+            control.setMapping(mapping)
         self._controls.append(control)
         return mapping
 

@@ -6,6 +6,7 @@ Author: Miguel Guthridge
 """
 
 from devicerep import ControlMapping, ControlValue
+from exceptions import DeviceSetupException
 
 class ControlSurface:
     """Abstract object representing a generic control surface.
@@ -45,7 +46,7 @@ class ControlSurface:
         if self._mapping is None:
             self._mapping = mapping
         else:
-            raise Exception("Mapping already set")
+            raise DeviceSetupException("Mapping already set")
 
     def recognise(self, event) -> 'ControlValue':
         """If the event is recognised as mapping to this `ControlSurface`,

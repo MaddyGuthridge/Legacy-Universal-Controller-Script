@@ -57,7 +57,7 @@ class DeviceState:
             int: Index of the control set
         """
         index = len(self._control_sets)
-        # TODO: Set index of control set
+        control_set.setIndex(index)
         self._control_sets.append(control_set)
         return index
     
