@@ -13,6 +13,6 @@ from .knob import Knob
 from .fader import Fader
 from .button import Button, FaderButton, SoloButton, MuteButton
 from .drumpad import DrumPad
-from .transport_buttons import TransportButton, PlayPauseButton, StopButton, \
+from .transportbuttons import TransportButton, PlayPauseButton, StopButton, \
     JogButton, FastForwardButton, RewindButton, LoopButton, RecordButton, \
     TrackButton, NextTrackButton, PrevTrackButton

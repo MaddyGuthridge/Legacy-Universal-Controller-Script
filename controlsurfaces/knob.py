@@ -5,7 +5,7 @@ Knob control surface
 Author: Miguel Guthridge
 """
 
-from .status_data1_control_surface import StatusData1ControlSurface
+from .statusdata1controlsurface import StatusData1ControlSurface
 
 class Knob(StatusData1ControlSurface):
     """Knob control surface

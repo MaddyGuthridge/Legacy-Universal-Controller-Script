@@ -6,7 +6,7 @@ Author: Miguel Guthridge
 """
 
 from devicerep import ControlValue
-from .status_data1_control_surface import StatusData1ControlSurface
+from .statusdata1controlsurface import StatusData1ControlSurface
 
 # Constants
 BUTTON_PRESS = 0x7F
