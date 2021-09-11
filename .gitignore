@@ -5,4 +5,6 @@ Universal Controller Script.code-workspace
 autoinit.py
 _autoinit.py
 
+.venv
+
 temp.py
