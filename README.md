@@ -3,10 +3,9 @@ A universal script to link almost any controller to FL Studio using the MIDI Scr
 
 ## IMPORTANT NOTE
 
-Currently this script is in beta. Don't expect many features, and don't expect it to work properly 100% of the time. 
-That being said, I want to hear your feedback. What do you want to see in the script? What bugs have you found? How can I support your controller better?
+This is the legacy version of the script, which I don't intend to maintain any further. I am working on a complete rewrite that should make the script far more modular and easy to maintain, with the hope of making it the standard for most controllers. Currently, the new version doesn't work, but if you want to contribute, that's the one you should work on.
 
-### The easiest way to tell me these things is to join the Discord server.
+### If you want to help me with the project, or get notified whenever I release updates, join the Discord Server
 
 Here's your link:
 
